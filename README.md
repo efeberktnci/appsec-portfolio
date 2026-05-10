@@ -12,8 +12,6 @@ This repository is my AppSec / Product Security portfolio: lab write-ups, pentes
 
 ### PortSwigger Web Security Academy
 - All PortSwigger write-ups: [writeups/portswigger/](writeups/portswigger/)
-- Access Control index: [writeups/portswigger/access-control/](writeups/portswigger/access-control/)
-- Path Traversal index: [writeups/portswigger/server-side-vulns/path-traversal/](writeups/portswigger/server-side-vulns/path-traversal/)
 
 #### Featured write-ups (PortSwigger)
 - Access Control — Notes (core concepts): [00-notes-access-control-core-concepts.md](writeups/portswigger/access-control/00-notes-access-control-core-concepts.md)
