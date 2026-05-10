@@ -8,6 +8,19 @@ This repository is my AppSec / Product Security portfolio: lab write-ups, pentes
 - Evidence-backed (sanitized) PoCs with no sensitive data
 - Practical fixes and tests (not just “there is a vuln”, but “how to fix it”)
 
+## By Platform (pick a lab environment)
+
+### PortSwigger Web Security Academy
+- All PortSwigger write-ups: `writeups/portswigger/`
+- Access Control index: `writeups/portswigger/access-control/`
+- Path Traversal index: `writeups/portswigger/server-side-vulns/path-traversal/`
+
+### OWASP Juice Shop
+- Reports: `reports/` (coming soon)
+
+### CI/CD Security Demos
+- Companion repo: `https://github.com/efeberktnci/appsec-tools-demo`
+
 ## Standard Finding Format
 Each finding follows the same structure:
 - Scope / Target
