@@ -14,11 +14,8 @@ This repository is my AppSec / Product Security portfolio: lab write-ups, pentes
 - All PortSwigger write-ups: [writeups/portswigger/](writeups/portswigger/)
 
 #### Featured write-ups (PortSwigger)
-- Access Control — Notes (core concepts): [00-notes-access-control-core-concepts.md](writeups/portswigger/access-control/00-notes-access-control-core-concepts.md)
-- Lab — User role controlled by request parameter: [01-user-role-controlled-by-request-parameter.md](writeups/portswigger/access-control/01-user-role-controlled-by-request-parameter.md)
-- Lab — User ID controlled by request parameter with password disclosure: [02-user-id-controlled-by-request-parameter-with-password-disclosure.md](writeups/portswigger/access-control/02-user-id-controlled-by-request-parameter-with-password-disclosure.md)
-- Path Traversal — Reading arbitrary files (concept): [01-reading-arbitrary-files-via-path-traversal.md](writeups/portswigger/server-side-vulns/path-traversal/01-reading-arbitrary-files-via-path-traversal.md)
-- Lab — File path traversal, simple case: [02-lab-file-path-traversal-simple-case.md](writeups/portswigger/server-side-vulns/path-traversal/02-lab-file-path-traversal-simple-case.md)
+- [Access control](writeups/portswigger/access-control/)
+- [Path traversal](writeups/portswigger/server-side-vulns/path-traversal/)
 
 ### OWASP Juice Shop
 - Reports: [reports/](reports/) (coming soon)
