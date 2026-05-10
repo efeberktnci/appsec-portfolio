@@ -19,6 +19,9 @@ privileged user (e.g., `administrator`), the application leaks that user's curre
 Request (sanitized):
 - `GET https://<lab-host>/my-account?id=administrator`
 
+Screenshot (Burp HTTP history):
+- `assets/password-disclosure-burp-history.webp`
+
 Response (sanitized snippet):
 ```http
 HTTP/2 200 OK
