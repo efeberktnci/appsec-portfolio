@@ -29,7 +29,8 @@ Content-Type: text/html; charset=utf-8
 
 <p>Your username is: administrator</p>
 ...
-<input required type=password name=password value='<redacted-password>'/>
+<input required type="hidden" name="csrf" value="1xwSMDe4csdgm4zZE2irRH4wuCISW6Pj">
+<input required type=password name=password value='i3gnyqo7ozkvgyhhcuwn'/>
 ```
 
 ## Impact
