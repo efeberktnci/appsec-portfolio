@@ -18,10 +18,16 @@ By tampering with this value, a normal user can access admin functionality and p
 6. Perform a privileged action (in the lab: delete user `carlos`).
 
 ## Evidence (sanitized)
-**TODO:** Paste a sanitized snippet (no cookies/tokens) showing:
-- Response header that sets `Admin=false`
-- Your modified value `Admin=true`
-- Successful `/admin` response status (e.g., 200 OK) after tampering
+Request showing access denied state (sanitized):
+```http
+GET /admin HTTP/2
+Host: <lab-host>
+Cookie: Admin=false; session=<redacted>
+```
+
+Evidence to add (optional, recommended):
+- The login response header where the app sets `Admin=false` (e.g., `Set-Cookie: Admin=false; ...`)
+- A follow-up request with `Admin=true` and a successful `/admin` response (e.g., 200 OK)
 
 ## Impact
 Privilege escalation to administrator. In real systems this can lead to account takeover, data exposure, and destructive actions.
