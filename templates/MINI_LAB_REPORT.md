@@ -1,4 +1,4 @@
-﻿# Mini Lab Report (10-15 lines)
+# Mini Lab Report (10–15 lines)
 
 - Goal:
 - Lab:
@@ -7,4 +7,3 @@
 - Impact:
 - Fix idea:
 - What I learned:
-

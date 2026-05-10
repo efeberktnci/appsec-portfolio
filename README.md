@@ -1,41 +1,41 @@
 # AppSec Portfolio (Job-Ready Junior Track)
 
-Bu repo, AppSec/Product Security odakli portfolyomu tek yerde toplar: lab write-up'lari, pentest-style finding raporlari,
-threat model ve code review checklist gibi Secure SDLC artefact'lari, CI/CD guvenlik demo ciktisi.
+This repository is my AppSec / Product Security portfolio: lab write-ups, pentest-style findings, Secure SDLC artifacts
+(threat modeling, code review checklists), and CI/CD security demo outputs.
 
-## Ne goreceksin?
-- Tekrarlanabilir (reproducible) adimlarla yazilmis finding raporlari
-- Kanit (evidence) iceren ama hassas veri icermeyen (sanitized) PoC'ler
-- Fix / test onerileri (sadece "acik var" degil, "nasil kapanir")
+## What you’ll find here
+- Reproducible findings with clear steps to reproduce
+- Evidence-backed (sanitized) PoCs with no sensitive data
+- Practical fixes and tests (not just “there is a vuln”, but “how to fix it”)
 
-## Standart Finding Formati
-Her finding su bloklari icerir:
-- Scope/Target
+## Standard Finding Format
+Each finding follows the same structure:
+- Scope / Target
 - Steps to reproduce
-- Evidence (sanitized request/response, screenshot, log)
+- Evidence (sanitized request/response, screenshots, logs)
 - Impact
-- Severity (Low/Med/High/Critical + gerekce)
-- Recommendation (fix + test + defense-in-depth)
+- Severity (Low/Medium/High/Critical + rationale)
+- Recommendation (fix + tests + defense-in-depth)
 - Retest plan
-- Executive summary (5–10 satir)
+- Executive summary (5–10 lines)
 
-Sablon: `templates/FINDING_TEMPLATE.md`
+Template: `templates/FINDING_TEMPLATE.md`
 
-## Hizli Baslangic (Yeni Finding Eklemek)
-1. `templates/FINDING_TEMPLATE.md` dosyasini kopyala
-2. Uygun klasore koy:
+## Quick Start (Add a new finding)
+1. Copy `templates/FINDING_TEMPLATE.md`
+2. Place it under the right folder:
    - PortSwigger / lab write-up: `writeups/`
-   - Juice Shop / rapor: `reports/`
-3. Hassas verileri sansurle (token/cookie/secret/real target URL yok)
-4. Commit mesaji: `report: <kisa baslik>` veya `writeup: <lab adi>`
+   - Juice Shop / report-style finding: `reports/`
+3. Sanitize anything sensitive (no tokens/cookies/secrets/real target URLs)
+4. Use clean commit messages: `writeup: <lab name>` or `report: <short title>`
 
-## Klasor Yapisi
-- `writeups/` PortSwigger ve diger lab write-up'lari
-- `reports/` Juice Shop ve finding raporlari (Markdown/PDF)
-- `threat-models/` Threat model dokumanlari
-- `checklists/` Code review checklist
-- `ci-cd-demo/` CI/CD guvenlik demo artefact'lari
-- `templates/` Kopyala-yapistir sablonlar
+## Folder Structure
+- `writeups/` PortSwigger + other lab write-ups
+- `reports/` Juice Shop reports and findings (Markdown/PDF)
+- `threat-models/` Threat model documents
+- `checklists/` Code review checklists
+- `ci-cd-demo/` CI/CD security demo artifacts
+- `templates/` Copy/paste templates
 
-## Not
-Bu repo "is hayati raporu" gorunumunu hedefler ama sadece lab/izinli hedefler icindir. Gercek sistemlere izinsiz test yok.
+## Legal / Ethics
+This repository is for labs and authorized targets only. No testing of real systems without explicit permission.

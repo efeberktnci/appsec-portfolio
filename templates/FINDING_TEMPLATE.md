@@ -1,4 +1,4 @@
-﻿# Finding Report Template
+# Finding Report Template
 
 ## Scope / Target
 - Target:
@@ -33,5 +33,4 @@
 
 ## References
 
-## Executive Summary (5-10 lines)
-
+## Executive Summary (5–10 lines)
