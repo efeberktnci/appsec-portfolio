@@ -27,17 +27,21 @@ Baseline request capture:
 
 ![Baseline stock check request captured in Burp](assets/04-ssrf-02-01-stock-check-capture.png)
 
-Intruder internal range scan (`192.168.0.X:8080`) showing the successful hit:
+Intruder setup for internal range scan (`192.168.0.X:8080`):
 
-**TODO:** Save the Intruder results screenshot to `assets/04-ssrf-02-02-intruder-range-scan.png` and embed it here.
+![Intruder configured to scan 192.168.0.X:8080](assets/04-ssrf-02-02-intruder-setup.png)
+
+Intruder results showing a successful hit (200 OK):
+
+![Intruder results highlighting the discovered internal host](assets/04-ssrf-02-03-intruder-range-scan.png)
 
 Admin interface retrieved via SSRF (example hit):
 
-![Admin interface fetched from internal host via SSRF](assets/04-ssrf-02-03-admin-found.png)
+![Admin interface fetched from internal host via SSRF](assets/04-ssrf-02-04-admin-found.png)
 
 Delete action triggered via SSRF (redirect after deletion):
 
-![SSRF request triggering delete action on internal host](assets/04-ssrf-02-04-delete-carlos.png)
+![SSRF request triggering delete action on internal host](assets/04-ssrf-02-05-delete-carlos.png)
 
 ## Impact
 SSRF can be used to scan internal networks, discover internal services, access internal admin interfaces, and perform
