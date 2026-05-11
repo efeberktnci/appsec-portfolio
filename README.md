@@ -1,11 +1,10 @@
-# AppSec Portfolio (Job-Ready Junior Track)
+# AppSec Portfolio 
 
 This repository is my AppSec / Product Security portfolio: lab write-ups, pentest-style findings, Secure SDLC artifacts
 (threat modeling, code review checklists), and CI/CD security demo outputs.
 
 ## What you’ll find here
 - Reproducible findings with clear steps to reproduce
-- Evidence-backed PoCs with no sensitive data
 - Practical fixes and tests (not just “there is a vuln”, but “how to fix it”)
 
 ## By Platform (pick a lab environment)
