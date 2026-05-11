@@ -35,9 +35,6 @@ Intruder results showing a successful hit (200 OK):
 
 ![Intruder results highlighting the discovered internal host](assets/04-ssrf-02-03-intruder-range-scan.png)
 
-Admin interface retrieved via SSRF (example hit):
-
-![Admin interface fetched from internal host via SSRF](assets/04-ssrf-02-04-admin-found.png)
 
 Delete action triggered via SSRF (redirect after deletion):
 
