@@ -24,6 +24,9 @@ completing the 2FA step. As a result, an attacker with valid credentials can byp
 ![Email client containing the 2FA security code (for the low-priv user)](assets/02-2fa-02-email-code.png)
 
 
+![Victim account page loaded (bypass confirmed)](assets/02-2fa-06-carlos-account-page.png)
+
+
 ![Logging in with victim credentials (carlos)](assets/02-2fa-03-login-carlos-creds.png)
 
 
@@ -33,7 +36,6 @@ completing the 2FA step. As a result, an attacker with valid credentials can byp
 ![Bypass by navigating directly to /my-account while still at the 2FA step](assets/02-2fa-05-bypass-my-account.png)
 
 
-![Victim account page loaded (bypass confirmed)](assets/02-2fa-06-carlos-account-page.png)
 
 ## Impact
 2FA bypass leads to account takeover whenever an attacker obtains valid credentials (phishing, credential stuffing, reuse).
