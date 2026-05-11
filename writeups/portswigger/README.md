@@ -3,12 +3,10 @@
 This folder contains my PortSwigger Academy notes and lab write-ups, organized by topic.
 
 ## Topics
-- Access Control (broken access control, IDOR, privilege escalation): `access-control/`
-- Server-side vulnerabilities → Path traversal (arbitrary file read): `server-side-vulns/path-traversal/`
+- Server-side vulnerabilities (ordered): `server-side-vulns/`
 
 ## Quick links
-- Access Control index: `access-control/README.md`
-- Path traversal index: `server-side-vulns/path-traversal/README.md`
+- Server-side vulnerabilities index: `server-side-vulns/README.md`
 
 ## Notes
 - “Lab:” files include steps + evidence + impact + fix.

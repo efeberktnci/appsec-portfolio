@@ -14,8 +14,7 @@ This repository is my AppSec / Product Security portfolio: lab write-ups, pentes
 - All PortSwigger write-ups: [writeups/portswigger/](writeups/portswigger/)
 
 #### Featured write-ups (PortSwigger)
-- [Access control](writeups/portswigger/access-control/)
-- [Path traversal](writeups/portswigger/server-side-vulns/path-traversal/)
+- [Server-side vulnerabilities (ordered)](writeups/portswigger/server-side-vulns/)
 
 ### OWASP Juice Shop
 - Reports: [reports/](reports/) (coming soon)
