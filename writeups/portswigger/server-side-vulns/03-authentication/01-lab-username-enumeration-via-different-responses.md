@@ -25,12 +25,16 @@ valid username, then brute-force the password using a wordlist.
 
 Screenshots:
 
+Baseline request capture (what we send to Intruder):
 ![Captured baseline login request in Burp (sent to Intruder)](assets/01-login-request-captured.png)
 
+Username enumeration (look for the outlier / different response):
 ![Username enumeration result (different response for a valid username)](assets/02-username-enum-hit.png)
 
+Password brute-force (success is usually a redirect, e.g. `302`):
 ![Password brute-force result showing a 302 redirect (successful login)](assets/03-password-bruteforce-302.png)
 
+Verification (the account page loads after logging in):
 ![Account page loaded after logging in](assets/04-account-page.png)
 
 ## Impact

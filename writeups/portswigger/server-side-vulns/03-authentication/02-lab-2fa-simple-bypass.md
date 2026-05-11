@@ -17,16 +17,22 @@ completing the 2FA step. As a result, an attacker with valid credentials can byp
 5. If the account page loads, 2FA is bypassed and the lab is solved.
 
 ## Evidence
+Victim login reaches the 2FA checkpoint (we do *not* have the code):
 ![2FA prompt shown after entering victim credentials](assets/02-2fa-01-2fa-prompt.png)
 
+Low-priv user's email client shows the 2FA code delivery flow (proves code is required in the intended path):
 ![Email client containing the 2FA security code (for the low-priv user)](assets/02-2fa-02-email-code.png)
 
+Victim credentials entered successfully (carlos:montoya), immediately followed by the 2FA prompt:
 ![Logging in with victim credentials (carlos)](assets/02-2fa-03-login-carlos-creds.png)
 
+We are still on the 2FA URL / step (session is not 2FA-complete yet):
 ![2FA step URL after logging in as the victim](assets/02-2fa-04-carlos-2fa-url.png)
 
+Bypass: directly navigate to `/my-account` without submitting a 2FA code:
 ![Bypass by navigating directly to /my-account while still at the 2FA step](assets/02-2fa-05-bypass-my-account.png)
 
+Result: victim's account page loads anyway (2FA bypass confirmed):
 ![Victim account page loaded (bypass confirmed)](assets/02-2fa-06-carlos-account-page.png)
 
 ## Impact
