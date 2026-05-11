@@ -1,4 +1,4 @@
-# Server-side vulnerabilities — Index (PortSwigger)
+﻿# Server-side vulnerabilities — Index (PortSwigger)
 
 This folder groups write-ups in the exact order I completed them.
 
@@ -7,3 +7,4 @@ This folder groups write-ups in the exact order I completed them.
 2. Access control: [02-access-control/](02-access-control/)
 3. Authentication: [03-authentication/](03-authentication/)
 4. **SSRF**: [04-ssrf/](04-ssrf/)
+5. File upload vulnerabilities: [05-file-upload/](05-file-upload/)
