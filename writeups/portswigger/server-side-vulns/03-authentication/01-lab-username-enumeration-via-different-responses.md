@@ -26,6 +26,8 @@ valid username, then brute-force the password using a wordlist.
 Screenshot (sanitized):
 - `assets/username-enum-password-bruteforce-302.png`
 
+![Intruder results showing 302 redirect for the correct password](assets/username-enum-password-bruteforce-302.png)
+
 ## Impact
 Username enumeration significantly reduces the effort needed for brute-force attacks and increases account takeover risk.
 

@@ -22,6 +22,8 @@ Request (sanitized):
 Screenshot (Burp HTTP history):
 - `assets/password-disclosure-burp-history.webp`
 
+![Burp HTTP history showing /my-account?id=administrator request](assets/password-disclosure-burp-history.webp)
+
 Response (sanitized snippet):
 ```http
 HTTP/2 200 OK
