@@ -19,14 +19,19 @@ valid username, then brute-force the password using a wordlist.
 6. Log in with the discovered credentials and access the account page to solve the lab.
 
 ## Evidence
-- Valid username identified: `auth` (response message indicates a valid user but wrong password).
+- Valid username identified: `asterix` (response differs for valid vs invalid usernames).
 - Successful password attempt shows a redirect:
-  - `302 Found` → `Location: /my-account?id=auth`
+  - `302 Found` → `Location: /my-account?id=asterix`
 
-Screenshot:
-- `assets/username-enum-password-bruteforce-302.png`
+Screenshots:
 
-![Intruder results showing 302 redirect for the correct password](assets/username-enum-password-bruteforce-302.png)
+![Captured baseline login request in Burp (sent to Intruder)](assets/01-login-request-captured.png)
+
+![Username enumeration result (different response for a valid username)](assets/02-username-enum-hit.png)
+
+![Password brute-force result showing a 302 redirect (successful login)](assets/03-password-bruteforce-302.png)
+
+![Account page loaded after logging in](assets/04-account-page.png)
 
 ## Impact
 Username enumeration significantly reduces the effort needed for brute-force attacks and increases account takeover risk.
