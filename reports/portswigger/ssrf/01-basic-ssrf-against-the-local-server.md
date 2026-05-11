@@ -6,70 +6,77 @@
 - Date: 2026-05-11
 
 ## Summary
-The application’s stock check feature fetches a URL provided by the client (`stockApi`). Because the backend performs the
-request server-side without proper validation or allowlisting, an attacker can force it to request internal-only URLs such
-as `http://localhost/admin`. This exposes internal admin functionality and allows privileged actions (deleting users).
+The stock check feature fetches a URL provided by the client (`stockApi`). Because the backend performs the request
+server-side without a strict outbound allowlist and without blocking internal destinations, an attacker can force the
+server to request internal-only URLs such as `http://localhost/admin`. This exposes internal admin functionality and
+enables privileged actions (in the lab: deleting the user `carlos`).
+
+## Background (what SSRF enables)
+Server-Side Request Forgery (SSRF) occurs when an application makes outbound requests based on attacker-controlled input.
+The core risk is that the request is executed from the server's network position and privileges, which may provide:
+- Access to internal-only services (admin panels, internal APIs, monitoring endpoints)
+- Access to cloud metadata endpoints (identity/credential exposure)
+- Network trust advantages (services that trust `localhost` or private subnets)
+
+SSRF is frequently escalated via redirect handling, DNS tricks (rebinding/pinning), and weak network segmentation.
 
 ## Steps to Reproduce
 1. Navigate to a product page and click **Check stock**.
-2. In Burp, capture the request to the stock check endpoint (e.g., `POST /product/stock`).
-3. Send the request to Repeater.
-4. Modify the `stockApi` parameter to target the internal admin interface:
+2. In Burp, capture the request to the stock check endpoint (e.g., `POST /product/stock`) and send it to Repeater.
+3. Modify the `stockApi` parameter to target the internal admin interface:
    - `stockApi=http://localhost/admin`
-5. Send the request and observe the response contains admin interface content and a delete action for `carlos`.
-6. Modify the parameter to trigger the delete action:
+4. Send the request and observe the response contains admin interface content and a delete action for `carlos`.
+5. Modify the parameter to trigger the delete action:
    - `stockApi=http://localhost/admin/delete?username=carlos`
-7. Send the request and confirm the server responds with a redirect (e.g., `302 Found` to `/admin`) and the lab marks as solved.
+6. Send the request and confirm the server responds with a redirect (e.g., `302 Found` to `/admin`) and the lab marks as solved.
 
 ## Evidence
 Baseline request capture:
-- `writeups/portswigger/server-side-vulns/04-ssrf/assets/01-stock-check-request.png`
 
 ![Baseline stock check request captured in Burp](../../../writeups/portswigger/server-side-vulns/04-ssrf/assets/01-stock-check-request.png)
 
 Admin interface fetched via SSRF:
-- `writeups/portswigger/server-side-vulns/04-ssrf/assets/02-localhost-admin-panel.png`
 
 ![Admin interface retrieved via SSRF to localhost](../../../writeups/portswigger/server-side-vulns/04-ssrf/assets/02-localhost-admin-panel.png)
 
 Delete action triggered via SSRF (redirect after deletion):
-- `writeups/portswigger/server-side-vulns/04-ssrf/assets/03-delete-carlos-redirect.png`
 
 ![SSRF request triggering delete action and 302 redirect](../../../writeups/portswigger/server-side-vulns/04-ssrf/assets/03-delete-carlos-redirect.png)
 
 ## Impact
-SSRF enables attackers to make the server initiate requests to unintended targets. This often allows access to:
-- Internal-only services (admin panels, internal APIs, monitoring endpoints)
-- Cloud metadata services (credential exposure)
-- Sensitive data not exposed externally
-
-In this case, internal admin functionality is reachable and destructive actions are possible.
+This SSRF primitive enables internal admin access and execution of privileged actions. In real systems, the same class of
+issue is commonly used to:
+- Reach internal control planes (admin UIs, internal dashboards, service discovery)
+- Exfiltrate secrets via internal endpoints (configuration, tokens, internal APIs)
+- Probe internal networks (status/timing-based discovery)
+- Target cloud metadata endpoints (identity and credential exposure)
 
 ## Severity
 - Rating: Critical
 - Rationale: Internal admin endpoint access + privileged action execution via attacker-controlled server-side requests.
 
 ## Recommendation
-### Primary controls
-- Use an allowlist for outbound destinations (exact domains/paths required for stock checks).
-- Resolve the hostname and block requests to loopback/link-local/private ranges (e.g., `127.0.0.0/8`, `10.0.0.0/8`,
-  `172.16.0.0/12`, `192.168.0.0/16`, `169.254.0.0/16`, IPv6 loopback/private).
+### Primary controls (do these first)
+- Implement a strict allowlist for outbound destinations required by the stock-check feature (exact domains/paths).
+- Resolve DNS and block requests to loopback/link-local/private ranges (IPv4 + IPv6), including:
+  - `127.0.0.0/8`, `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`, `169.254.0.0/16`
 - Disable redirects, or re-validate the destination after every redirect hop.
+- Restrict URL schemes to `http`/`https` only (avoid `file://`, `gopher://`, etc., depending on client support).
 
 ### Defense in depth
-- Enforce egress firewall rules so this component cannot reach internal admin services or metadata endpoints.
-- Add strict timeouts and request limits to prevent SSRF-based scanning.
-- Log outbound request attempts and alert on blocked/internal targets.
+- Enforce egress network controls so this feature cannot reach internal admin services or metadata endpoints.
+- Add strict timeouts and request limits to reduce SSRF-based scanning and DoS.
+- Log outbound request attempts and alert on internal/blocked destination attempts.
 
 ## Retest Plan
-- Attempt SSRF to `localhost`, `127.0.0.1`, private IPs, and URL-encoded variants; verify they are blocked.
-- Attempt redirect-based bypass; verify redirects do not allow internal targets.
-- Confirm the stock check still works for allowlisted endpoints.
+- Attempt SSRF to `localhost`, `127.0.0.1`, private IPs, and URL-encoded variants; verify blocks are enforced after DNS resolution.
+- Attempt redirect-based bypass; verify redirects cannot reach internal targets.
+- Confirm stock check continues to work for allowlisted endpoints only.
 
 ## Executive Summary (5–10 lines)
-The stock check feature allows client-controlled URLs to be fetched by the backend. This enables server-side request
-forgery (SSRF), letting an attacker access internal-only endpoints such as `http://localhost/admin`. Using SSRF, an
-attacker can reach admin functionality and execute privileged actions (e.g., deleting users). The risk is high because
-internal services and cloud metadata may be reachable from the application environment. Fix by allowlisting outbound
-destinations, blocking private/loopback IP ranges after DNS resolution, disabling unsafe redirects, and enforcing egress
-network controls. Add monitoring and tests to prevent regressions.
+The stock check feature fetches a client-supplied URL server-side, enabling SSRF. An attacker can force the server to
+request internal-only endpoints such as `http://localhost/admin`, exposing admin functionality and allowing privileged
+actions like deleting users. This is critical because internal services and cloud metadata endpoints may be reachable from
+the application environment, expanding impact far beyond the web app itself. Fix by allowlisting outbound destinations,
+blocking private/loopback/link-local IPs after DNS resolution, disabling unsafe redirects, and enforcing egress network
+controls. Add monitoring and regression tests to prevent reintroduction.
