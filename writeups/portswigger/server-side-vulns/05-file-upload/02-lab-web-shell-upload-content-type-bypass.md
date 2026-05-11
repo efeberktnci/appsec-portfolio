@@ -22,34 +22,34 @@ it's possible to upload a PHP web shell and read `/home/carlos/secret`.
    - To: `Content-Type: image/jpeg`
 6. Send the modified request. The server accepts the upload and responds with the uploaded path (for example:
    `avatars/shell.php`).
-7. Access the uploaded file under `/files/avatars/shell.php`.
-   - In the browser, opening the uploaded avatar in a new tab returns the secret directly (because the shell echoes it).
+7. Open the uploaded avatar path under `/files/avatars/shell.php`.
+   - In the browser flow shown here, right-clicking the uploaded avatar and opening it in a new tab returns the secret directly.
 8. Copy the secret value and submit it via the lab banner to solve the lab.
 
 ## Evidence
-0) PHP web shell used (reads `/home/carlos/secret`):
-![PHP web shell source](assets/02-00-web-shell-source.png)
+1) PHP web shell used (reads `/home/carlos/secret`):
+![PHP web shell source](assets/02-01-web-shell-source.png)
 
-1) My account page with the avatar upload form:
-![My account upload form](assets/02-01-my-account-upload-form.png)
+2) My account avatar upload form with `shell.php` selected:
+![My account upload form](assets/02-02-my-account-upload-form.png)
 
-2) `shell.php` selected for upload:
-![shell.php selected](assets/02-02-shell-selected.png)
+3) Server rejects the first upload attempt because the file part is `application/octet-stream`:
+![shell.php selected](assets/02-03-shell-selected.png)
 
-3) Normal upload attempt rejected due to MIME type check (`application/octet-stream`):
-![Upload rejected](assets/02-03-upload-rejected-octet-stream.png)
+4) Burp HTTP history shows the failed `POST /my-account/avatar` request (`403`):
+![Upload rejected](assets/02-04-upload-rejected-octet-stream.png)
 
-4) Burp history showing the avatar fetch path (`/files/avatars/<filename>`):
-![Proxy HTTP history showing avatar fetch](assets/02-04-proxy-history-avatar-fetch.png)
+5) Repeater copy of the upload request still has `Content-Type: application/octet-stream` in the file part:
+![Proxy HTTP history showing avatar fetch](assets/02-05-proxy-history-avatar-fetch.png)
 
-5) Repeater request showing the original file part `Content-Type: application/octet-stream`:
-![Repeater upload request with octet-stream](assets/02-05-repeater-upload-octet-stream.png)
+6) After changing the file part to `Content-Type: image/jpeg`, the server returns `200 OK` and uploads `avatars/shell.php`:
+![Repeater upload request with octet-stream](assets/02-06-repeater-upload-octet-stream.png)
 
-6) Repeater request after changing the file part `Content-Type` to `image/jpeg` (upload succeeds):
-![Repeater upload request with image/jpeg](assets/02-06-repeater-upload-image-jpeg.png)
+7) The successful Repeater request/response confirms the bypass path:
+![Repeater upload request with image/jpeg](assets/02-07-repeater-upload-image-jpeg.png)
 
-7) Opening the uploaded avatar in a new tab returns the secret:
-![Uploaded web shell returning the secret](assets/02-07-open-uploaded-shell-secret.png)
+8) Opening `/files/avatars/shell.php` in a new tab returns Carlos's secret:
+![Uploaded web shell returning the secret](assets/02-08-open-uploaded-shell-secret.png)
 
 ## Impact
 Bypassing file upload restrictions can enable remote code execution and full server compromise (read/write files, steal
@@ -68,4 +68,3 @@ secrets, pivot to other internal systems).
 ## Retest Plan
 - Attempt to upload `.php` again while spoofing `Content-Type`; verify the server rejects it.
 - Verify `/files/avatars/` cannot execute or interpret scripts (uploads are treated as inert content only).
-
