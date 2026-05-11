@@ -24,11 +24,17 @@ From there, we can trigger an admin action to delete the user `carlos`.
 Baseline stock check request:
 - `assets/01-stock-check-request.png`
 
+![Baseline stock check request (captured in Burp)](assets/01-stock-check-request.png)
+
 Admin interface accessed via SSRF:
 - `assets/02-localhost-admin-panel.png`
 
+![Admin interface retrieved via SSRF to localhost](assets/02-localhost-admin-panel.png)
+
 Delete action triggered via SSRF (redirect after deletion):
 - `assets/03-delete-carlos-redirect.png`
+
+![SSRF request triggering delete action and 302 redirect](assets/03-delete-carlos-redirect.png)
 
 ## Impact
 SSRF can grant access to internal-only services (admin panels, metadata endpoints, internal APIs). This can lead to data
