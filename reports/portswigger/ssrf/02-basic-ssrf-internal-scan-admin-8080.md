@@ -19,6 +19,19 @@ This variant turns SSRF into an internal discovery primitive:
 
 In real environments, this is often how SSRF chains start before moving to credentials, lateral movement, or infra impact.
 
+## Technical Root Cause
+Two separate issues combine here:
+1) The server performs outbound requests based on attacker-controlled input (`stockApi`).
+2) The server can reach internal network ranges, and responses are reflected back to the attacker.
+
+This makes SSRF not only an internal-access primitive, but also a discovery and enumeration tool.
+
+## Exploitation Notes (how attackers scale this)
+- **Range scanning:** iterate over IPs/ports and use status/length/timing differences to detect services.
+- **Endpoint guessing:** try common internal paths (`/admin`, `/metrics`, `/actuator`, `/debug`, etc.).
+- **Redirect abuse:** if redirects are followed, attackers can use open redirects to pivot to internal.
+- **DNS tricks:** if you allow hostnames, attackers can swap resolution to internal addresses (rebinding) if validation is weak.
+
 ## Steps to Reproduce
 1. Navigate to a product page and click **Check stock**.
 2. In Burp, capture the request to the stock check endpoint (e.g., `POST /product/stock`) and send it to Intruder.
@@ -79,6 +92,25 @@ The practical business risk is loss of confidentiality (internal data), integrit
 - Add strict timeouts and request limits to reduce SSRF-based scanning.
 - Add logging/alerting for blocked or suspicious destinations (private IPs, link-local, unusual ports).
 - Prefer an internal proxy service with centralized policy for outbound requests (where appropriate).
+
+## Detection & Monitoring (practical)
+- Alert on high-cardinality destination patterns (many distinct `192.168.0.X` targets in short time).
+- Track destination ports; port 8080 scanning is a strong signal.
+- Log and rate-limit this feature separately from normal endpoints.
+- Add WAF-style validation only as a supplement (policy enforcement must be server-side + network-side).
+
+## Test Cases (regression suite ideas)
+- Verify all private ranges are blocked after DNS resolution:
+  - `192.168.0.0/16`, `10.0.0.0/8`, `172.16.0.0/12`, `127.0.0.0/8`, `169.254.0.0/16`
+- Verify IPv6 loopback/private are blocked if your client supports IPv6.
+- Verify redirects cannot pivot to internal.
+- Ensure the allowlisted stock destination still works under normal usage.
+
+## References
+- OWASP SSRF Prevention Cheat Sheet: https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html
+- OWASP Top 10 2021 SSRF: https://owasp.org/Top10/2021/A10_2021-Server-Side_Request_Forgery_%28SSRF%29/
+- PortSwigger SSRF topic: https://portswigger.net/web-security/ssrf
+- MDN SSRF overview: https://developer.mozilla.org/docs/Web/Security/Attacks/SSRF
 
 ## Retest Plan
 - Attempt SSRF to private ranges, loopback, and URL-encoded variants; verify blocks are enforced after DNS resolution.

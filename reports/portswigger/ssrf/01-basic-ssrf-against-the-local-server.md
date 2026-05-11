@@ -55,6 +55,21 @@ issue is commonly used to:
 - Rating: Critical
 - Rationale: Internal admin endpoint access + privileged action execution via attacker-controlled server-side requests.
 
+## Technical Root Cause
+The application treats `stockApi` as data but uses it as a network destination. Attacker-controlled input reaches a
+server-side HTTP client without a strong policy boundary. Common contributing factors:
+- No strict outbound allowlist (host + path).
+- No post-DNS resolution checks (resolved IP can be internal even if the hostname looks safe).
+- Redirect following without validating each hop.
+- Over-trusting `localhost` / internal networks.
+
+## Exploitation Notes (real-world variants)
+Even when SSRF defenses exist, common bypass surfaces include:
+- Alternative loopback forms: `127.1`, integer/IPv6 forms (`[::1]`), mixed/encoded representations.
+- Redirect chains: external URL → redirect → internal URL (if redirects are followed).
+- DNS rebinding/pinning edge-cases: hostname resolves to public IP, then to internal IP.
+- URL parsing inconsistencies (scheme/authority confusion) depending on the HTTP client.
+
 ## Recommendation
 ### Primary controls (do these first)
 - Implement a strict allowlist for outbound destinations required by the stock-check feature (exact domains/paths).
@@ -67,6 +82,24 @@ issue is commonly used to:
 - Enforce egress network controls so this feature cannot reach internal admin services or metadata endpoints.
 - Add strict timeouts and request limits to reduce SSRF-based scanning and DoS.
 - Log outbound request attempts and alert on internal/blocked destination attempts.
+
+## Detection & Monitoring (practical)
+- Log outbound destinations for URL-fetch features (hostname, resolved IP, port, path).
+- Alert on attempts targeting private/loopback/link-local ranges or unusual ports.
+- Watch for bursts of requests with many distinct destinations (SSRF-based scanning behavior).
+
+## Test Cases (regression suite ideas)
+- Negative tests (must be blocked):
+  - `http://localhost/admin`, `http://127.0.0.1/admin`, `http://[::1]/admin`
+  - `http://169.254.169.254/` (link-local metadata range)
+  - Redirect: allowlisted URL that redirects to an internal IP
+- Positive tests (must still work):
+  - Allowlisted stock endpoint returns the expected format (e.g., JSON)
+
+## References
+- OWASP SSRF Prevention Cheat Sheet: https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html
+- PortSwigger SSRF topic: https://portswigger.net/web-security/ssrf
+- MDN SSRF overview: https://developer.mozilla.org/docs/Web/Security/Attacks/SSRF
 
 ## Retest Plan
 - Attempt SSRF to `localhost`, `127.0.0.1`, private IPs, and URL-encoded variants; verify blocks are enforced after DNS resolution.
