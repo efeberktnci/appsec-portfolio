@@ -23,13 +23,19 @@ as `http://localhost/admin`. This exposes internal admin functionality and allow
 
 ## Evidence (sanitized)
 Baseline request capture:
-- `../../../writeups/portswigger/server-side-vulns/04-ssrf/assets/01-stock-check-request.png`
+- `writeups/portswigger/server-side-vulns/04-ssrf/assets/01-stock-check-request.png`
+
+![Baseline stock check request captured in Burp](../../../writeups/portswigger/server-side-vulns/04-ssrf/assets/01-stock-check-request.png)
 
 Admin interface fetched via SSRF:
-- `../../../writeups/portswigger/server-side-vulns/04-ssrf/assets/02-localhost-admin-panel.png`
+- `writeups/portswigger/server-side-vulns/04-ssrf/assets/02-localhost-admin-panel.png`
+
+![Admin interface retrieved via SSRF to localhost](../../../writeups/portswigger/server-side-vulns/04-ssrf/assets/02-localhost-admin-panel.png)
 
 Delete action triggered via SSRF (redirect after deletion):
-- `../../../writeups/portswigger/server-side-vulns/04-ssrf/assets/03-delete-carlos-redirect.png`
+- `writeups/portswigger/server-side-vulns/04-ssrf/assets/03-delete-carlos-redirect.png`
+
+![SSRF request triggering delete action and 302 redirect](../../../writeups/portswigger/server-side-vulns/04-ssrf/assets/03-delete-carlos-redirect.png)
 
 ## Impact
 SSRF enables attackers to make the server initiate requests to unintended targets. This often allows access to:
