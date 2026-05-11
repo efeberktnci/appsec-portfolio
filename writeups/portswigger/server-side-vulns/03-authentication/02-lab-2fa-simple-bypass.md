@@ -1,0 +1,39 @@
+# Lab: 2FA simple bypass (PortSwigger)
+
+## Scope / Target
+- Target: PortSwigger Web Security Academy lab instance
+- Scope: Lab environment only (no real targets)
+- Date: 2026-05-11
+
+## Summary
+The application enforces 2FA during login, but the post-login account page (`/my-account`) can be accessed without
+completing the 2FA step. As a result, an attacker with valid credentials can bypass 2FA and access the victim’s account.
+
+## Steps to Reproduce (high-level)
+1. Log in with a low-priv user (e.g., `wiener:peter`) and note the account page URL pattern (e.g., `/my-account`).
+2. Log out.
+3. Log in with the victim credentials (e.g., `carlos:montoya`).
+4. When prompted for the 2FA verification code, manually navigate to `/my-account` (instead of completing 2FA).
+5. If the account page loads, 2FA is bypassed and the lab is solved.
+
+## Evidence (sanitized)
+**TODO (add):** one of the following is enough:
+- Screenshot showing the account page loads while you are still on the 2FA step, or
+- Burp history snippet showing `GET /my-account` returns `200 OK` after logging in as the victim (cookies redacted).
+
+## Impact
+2FA bypass leads to account takeover whenever an attacker obtains valid credentials (phishing, credential stuffing, reuse).
+
+## Severity
+- Rating: Critical
+- Rationale: 2FA is rendered ineffective; direct unauthorized access to accounts is possible.
+
+## Recommendation
+- Enforce 2FA server-side by binding a “2FA-complete” state to the session.
+- Block access to authenticated pages until 2FA is completed.
+- Re-check authorization on every request; do not rely on client-side navigation.
+- Add tests: attempt to access `/my-account` with a session that is not 2FA-complete (should be denied/redirected).
+
+## Retest Plan
+- Verify `/my-account` is inaccessible until the session is marked 2FA-complete.
+- Verify bypass attempts (direct URL, opening in new tabs, replaying requests) fail consistently.
