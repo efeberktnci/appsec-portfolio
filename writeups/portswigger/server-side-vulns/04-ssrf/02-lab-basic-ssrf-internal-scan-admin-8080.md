@@ -25,7 +25,7 @@ admin endpoint to delete the user `carlos`.
 ## Evidence (sanitized)
 Baseline request capture:
 
-![Baseline stock check request captured in Burp](assets/04-ssrf-02-01-stock-check-capture.png)
+![Baseline stock check request captured in Burp](assets/04-ssrf-02-01-stock-check-capture-v2.png)
 
 Intruder setup for internal range scan (`192.168.0.X:8080`):
 

@@ -27,7 +27,7 @@ internal admin UI and execute privileged actions (deleting users).
 ## Evidence (sanitized)
 Baseline request capture:
 
-![Baseline stock check request captured in Burp](../../../writeups/portswigger/server-side-vulns/04-ssrf/assets/04-ssrf-02-01-stock-check-capture.png)
+![Baseline stock check request captured in Burp](../../../writeups/portswigger/server-side-vulns/04-ssrf/assets/04-ssrf-02-01-stock-check-capture-v2.png)
 
 Intruder internal range scan (`192.168.0.X:8080`) showing the successful hit:
 
