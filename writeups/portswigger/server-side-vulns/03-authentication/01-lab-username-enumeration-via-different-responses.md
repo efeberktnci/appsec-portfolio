@@ -28,6 +28,16 @@ Screenshot:
 
 ![Intruder results showing 302 redirect for the correct password](assets/username-enum-password-bruteforce-302.png)
 
+Additional evidence (step-by-step screenshots):
+
+![Intruder prepared with payload position for username enumeration](assets/01-intruder-positions.png)
+
+![Candidate usernames loaded as Intruder payloads](assets/02-usernames-payloads.png)
+
+![Password brute-force results table (look for the 302 hit)](assets/03-password-results-table.png)
+
+![Successful attempt details showing 302 redirect](assets/04-success-302-details.png)
+
 ## Impact
 Username enumeration significantly reduces the effort needed for brute-force attacks and increases account takeover risk.
 
