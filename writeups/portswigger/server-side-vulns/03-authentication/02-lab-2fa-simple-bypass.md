@@ -7,7 +7,7 @@
 
 ## Summary
 The application enforces 2FA during login, but the post-login account page (`/my-account`) can be accessed without
-completing the 2FA step. As a result, an attacker with valid credentials can bypass 2FA and access the victim’s account.
+completing the 2FA step. As a result, an attacker with valid credentials can bypass 2FA and access the victim's account.
 
 ## Steps to Reproduce (high-level)
 1. Log in with a low-priv user (e.g., `wiener:peter`) and note the account page URL pattern (e.g., `/my-account`).
@@ -17,9 +17,17 @@ completing the 2FA step. As a result, an attacker with valid credentials can byp
 5. If the account page loads, 2FA is bypassed and the lab is solved.
 
 ## Evidence
-**TODO (add):** one of the following is enough:
-- Screenshot showing the account page loads while you are still on the 2FA step, or
-- Burp history snippet showing `GET /my-account` returns `200 OK` after logging in as the victim.
+![2FA prompt shown after entering victim credentials](assets/02-2fa-01-2fa-prompt.png)
+
+![Email client containing the 2FA security code (for the low-priv user)](assets/02-2fa-02-email-code.png)
+
+![Logging in with victim credentials (carlos)](assets/02-2fa-03-login-carlos-creds.png)
+
+![2FA step URL after logging in as the victim](assets/02-2fa-04-carlos-2fa-url.png)
+
+![Bypass by navigating directly to /my-account while still at the 2FA step](assets/02-2fa-05-bypass-my-account.png)
+
+![Victim account page loaded (bypass confirmed)](assets/02-2fa-06-carlos-account-page.png)
 
 ## Impact
 2FA bypass leads to account takeover whenever an attacker obtains valid credentials (phishing, credential stuffing, reuse).
