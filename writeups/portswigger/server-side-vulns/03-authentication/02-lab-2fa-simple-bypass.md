@@ -23,19 +23,19 @@ completing the 2FA step. As a result, an attacker with valid credentials can byp
 8. Load the page. If Carlos's account page loads, you have bypassed 2FA.
 
 ## Evidence
-1) Victim login reaches the 2FA checkpoint (no victim code available):
+1) Our own login reaches the 2FA checkpoint (we can receive the code for our account):
 ![2FA prompt shown after entering victim credentials](assets/02-2fa-01-2fa-prompt.png)
 
-2) Low-priv user receives a 2FA code via the in-lab email client:
+2) We retrieve the 2FA code from the in-lab email client (for our account) and complete 2FA:
 ![Email client containing the 2FA security code (for the low-priv user)](assets/02-2fa-02-email-code.png)
 
-3) Victim credentials are accepted (password step passes), then the 2FA prompt is shown:
+3) We attempt to log in as the victim (`carlos:montoya`) and hit the 2FA prompt (no code entered):
 ![Logging in with victim credentials (carlos)](assets/02-2fa-03-login-carlos-creds.png)
 
-4) We are still on the 2FA step URL (2FA not completed):
+4) While still on the 2FA step, we switch the `id` in the `/my-account?id=...` URL to the victim and load the page:
 ![2FA step URL after logging in as the victim](assets/02-2fa-04-carlos-2fa-url.png)
 
-5) Bypass: manually navigate to `/my-account` with the victim's username/id (without entering any 2FA code):
+5) Bypass confirmed: `/my-account?id=carlos` loads without submitting any 2FA code:
 ![Bypass by navigating directly to /my-account while still at the 2FA step](assets/02-2fa-05-bypass-my-account.png)
 
 6) Result: victim's account page loads (2FA bypass confirmed):
