@@ -22,7 +22,7 @@ admin endpoint to delete the user `carlos`.
    - `stockApi=http://192.168.0.<hit>:8080/admin/delete?username=carlos`
 7. Confirm the delete action succeeded (commonly indicated by a `302 Found` redirect back to `/admin`) and the lab is solved.
 
-## Evidence (sanitized)
+## Evidence
 Baseline request capture:
 
 ![Baseline stock check request captured in Burp](assets/04-ssrf-02-01-stock-check-capture-v2.png)

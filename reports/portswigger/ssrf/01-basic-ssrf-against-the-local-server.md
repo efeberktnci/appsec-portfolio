@@ -21,7 +21,7 @@ as `http://localhost/admin`. This exposes internal admin functionality and allow
    - `stockApi=http://localhost/admin/delete?username=carlos`
 7. Send the request and confirm the server responds with a redirect (e.g., `302 Found` to `/admin`) and the lab marks as solved.
 
-## Evidence (sanitized)
+## Evidence
 Baseline request capture:
 - `writeups/portswigger/server-side-vulns/04-ssrf/assets/01-stock-check-request.png`
 

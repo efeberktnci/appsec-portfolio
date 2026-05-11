@@ -16,10 +16,10 @@ completing the 2FA step. As a result, an attacker with valid credentials can byp
 4. When prompted for the 2FA verification code, manually navigate to `/my-account` (instead of completing 2FA).
 5. If the account page loads, 2FA is bypassed and the lab is solved.
 
-## Evidence (sanitized)
+## Evidence
 **TODO (add):** one of the following is enough:
 - Screenshot showing the account page loads while you are still on the 2FA step, or
-- Burp history snippet showing `GET /my-account` returns `200 OK` after logging in as the victim (cookies redacted).
+- Burp history snippet showing `GET /my-account` returns `200 OK` after logging in as the victim.
 
 ## Impact
 2FA bypass leads to account takeover whenever an attacker obtains valid credentials (phishing, credential stuffing, reuse).

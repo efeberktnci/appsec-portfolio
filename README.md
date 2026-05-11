@@ -5,7 +5,7 @@ This repository is my AppSec / Product Security portfolio: lab write-ups, pentes
 
 ## What you’ll find here
 - Reproducible findings with clear steps to reproduce
-- Evidence-backed (sanitized) PoCs with no sensitive data
+- Evidence-backed PoCs with no sensitive data
 - Practical fixes and tests (not just “there is a vuln”, but “how to fix it”)
 
 ## By Platform (pick a lab environment)
@@ -26,7 +26,7 @@ This repository is my AppSec / Product Security portfolio: lab write-ups, pentes
 Each finding follows the same structure:
 - Scope / Target
 - Steps to reproduce
-- Evidence (sanitized request/response, screenshots, logs)
+- Evidence (request/response, screenshots, logs)
 - Impact
 - Severity (Low/Medium/High/Critical + rationale)
 - Recommendation (fix + tests + defense-in-depth)

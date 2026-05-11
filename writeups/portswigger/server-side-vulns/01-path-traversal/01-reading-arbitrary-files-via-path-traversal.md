@@ -14,8 +14,8 @@ without proper validation, an attacker can use traversal sequences like `../` to
 2. Replace the `filename` parameter with a traversal payload, e.g. `../../../etc/passwd`.
 3. Confirm the response contains the targeted file contents.
 
-## Evidence (sanitized)
-Example request pattern (sanitized):
+## Evidence
+Example request pattern:
 - `GET https://<lab-host>/loadImage?filename=../../../etc/passwd`
 
 Expected result:

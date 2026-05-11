@@ -14,7 +14,7 @@
 2.
 3.
 
-## Evidence (sanitized)
+## Evidence
 - Request/Response snippets:
 - Screenshots/logs:
 

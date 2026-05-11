@@ -18,12 +18,12 @@ valid username, then brute-force the password using a wordlist.
 5. Identify the correct password (commonly indicated by a redirect such as `302 Found` to `My account`).
 6. Log in with the discovered credentials and access the account page to solve the lab.
 
-## Evidence (sanitized)
+## Evidence
 - Valid username identified: `auth` (response message indicates a valid user but wrong password).
 - Successful password attempt shows a redirect:
   - `302 Found` → `Location: /my-account?id=auth`
 
-Screenshot (sanitized):
+Screenshot:
 - `assets/username-enum-password-bruteforce-302.png`
 
 ![Intruder results showing 302 redirect for the correct password](assets/username-enum-password-bruteforce-302.png)

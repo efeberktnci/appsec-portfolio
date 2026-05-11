@@ -24,7 +24,7 @@ internal admin UI and execute privileged actions (deleting users).
    - `stockApi=http://192.168.0.<hit>:8080/admin/delete?username=carlos`
 8. Confirm the server responds with a redirect (e.g., `302 Found` back to `/admin`) and the lab is solved.
 
-## Evidence (sanitized)
+## Evidence
 Baseline request capture:
 
 ![Baseline stock check request captured in Burp](../../../writeups/portswigger/server-side-vulns/04-ssrf/assets/04-ssrf-02-01-stock-check-capture-v2.png)

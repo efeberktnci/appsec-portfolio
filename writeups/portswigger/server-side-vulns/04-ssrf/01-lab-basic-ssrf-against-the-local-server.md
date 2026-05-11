@@ -20,7 +20,7 @@ From there, we can trigger an admin action to delete the user `carlos`.
    - `stockApi=http://localhost/admin/delete?username=carlos`
 6. Confirm the server responds with a redirect (e.g., `302 Found` to `/admin`) and the lab is solved.
 
-## Evidence (sanitized)
+## Evidence
 Baseline stock check request:
 - `assets/01-stock-check-request.png`
 
