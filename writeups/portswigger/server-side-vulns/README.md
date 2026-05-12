@@ -8,3 +8,5 @@ This folder groups write-ups in the exact order I completed them.
 3. Authentication: [03-authentication/](03-authentication/)
 4. **SSRF**: [04-ssrf/](04-ssrf/)
 5. File upload vulnerabilities: [05-file-upload/](05-file-upload/)
+6. OS command injection: [06-os-command-injection/](06-os-command-injection/)
+
