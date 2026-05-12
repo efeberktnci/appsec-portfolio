@@ -9,9 +9,7 @@ This folder contains my PortSwigger Academy notes and lab write-ups, organized b
 
 ## Topics
 - Server-side vulnerabilities (ordered): [server-side-vulns/](server-side-vulns/)
-
-## Quick links
-- Server-side vulnerabilities index: [server-side-vulns/README.md](server-side-vulns/README.md)
+- CSRF: [csrf/](csrf/)
 
 ## Notes
 - "Lab:" files include steps + evidence + impact + fix.
