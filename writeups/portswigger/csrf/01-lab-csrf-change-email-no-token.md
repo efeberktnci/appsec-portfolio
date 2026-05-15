@@ -4,6 +4,22 @@
 ![Platform: PortSwigger](https://img.shields.io/badge/Platform-PortSwigger-1C7ED6?style=for-the-badge)
 ![Topic: CSRF](https://img.shields.io/badge/Topic-CSRF-2F9E44?style=for-the-badge)
 
+## Lab Description
+
+This lab contains a CSRF vulnerability in an email change function. The endpoint performs a state-changing action using cookie-based session handling and does not include any effective CSRF defenses.
+
+Goal: trigger a victim user to submit a forged request that changes their email address.
+
+## Overview (what’s going on)
+
+CSRF works when all of the following are true:
+
+- **A relevant action** exists (here: changing account email).
+- The app relies on **cookie-based sessions** (the browser automatically attaches cookies).
+- The request has **no unpredictable parameter** that the attacker can’t know (no CSRF token / no re-auth).
+
+In this lab, the email change request contains only an `email=` parameter, so an attacker can fully construct the request body.
+
 ## 1) Reconnaissance & Findings
 
 I logged in using the provided `wiener:peter` account and tested the change-email function. By inspecting the request in Burp, I confirmed:
@@ -13,6 +29,21 @@ I logged in using the provided `wiener:peter` account and tested the change-emai
 - The application identifies the user **solely via the session cookie**.
 
 This combination satisfies the classic prerequisites for CSRF.
+
+### What the vulnerable request looks like (example)
+
+The request is essentially:
+
+```http
+POST /my-account/change-email HTTP/1.1
+Host: <LAB-ID>.web-security-academy.net
+Cookie: session=<victim_session_cookie>
+Content-Type: application/x-www-form-urlencoded
+
+email=<new_email_here>
+```
+
+There is no per-request secret (token) that ties the action to a page the user intentionally visited.
 
 ## 2) Weaponization (PoC)
 
@@ -33,6 +64,10 @@ Using the lab’s Exploit Server, I prepared an auto-submitting PoC (the `action
   </body>
 </html>
 ```
+
+### Why a simple auto-submit form is enough
+
+The attacker does **not** need to read the response (SOP/CORS often prevents reading cross-site responses anyway). They only need the victim’s browser to *send* the request with the victim’s cookies attached.
 
 ## 3) Exploitation
 
@@ -65,9 +100,15 @@ If the victim bot is authenticated to the target, the exploit triggers `POST /my
 
 ## Recommendation (Fix)
 
-- Implement CSRF tokens on all state-changing endpoints.
-- Use hardened cookies where appropriate: `SameSite=Lax/Strict`, `Secure`, `HttpOnly`.
-- For sensitive actions, require re-authentication (e.g., password prompt / step-up auth).
+Primary fixes:
+
+- Implement **CSRF tokens** on all state-changing endpoints.
+- Enforce **Origin/Referer validation** as a defense-in-depth control (do not rely on it alone).
+
+Hardening (defense-in-depth):
+
+- Use cookie attributes where appropriate: `SameSite=Lax/Strict`, `Secure`, `HttpOnly`.
+- For sensitive actions, require **re-authentication** (password prompt / step-up auth).
 
 ## How to test the fix
 
