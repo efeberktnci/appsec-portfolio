@@ -6,33 +6,34 @@
 
 ## Lab Description
 
-This lab contains a CSRF vulnerability in an email change function. The endpoint performs a state-changing action using cookie-based session handling and does not include any effective CSRF defenses.
+This lab contains a CSRF vulnerability in an email-change function. The endpoint performs a state-changing action using
+cookie-based session handling and does not include any effective CSRF defense.
 
-Goal: trigger a victim user to submit a forged request that changes their email address.
+Goal: trick a victim user into submitting a forged request that changes their account email address.
 
-## Overview (what’s going on)
+## Overview (what's going on)
 
-CSRF works when all of the following are true:
+CSRF works when all of the following conditions are true:
 
-- **A relevant action** exists (here: changing account email).
-- The app relies on **cookie-based sessions** (the browser automatically attaches cookies).
-- The request has **no unpredictable parameter** that the attacker can’t know (no CSRF token / no re-auth).
+- **A relevant action** exists (here: changing the account email).
+- The application relies on **cookie-based sessions**.
+- The request contains **no unpredictable parameter** that the attacker cannot know or generate.
 
-In this lab, the email change request contains only an `email=` parameter, so an attacker can fully construct the request body.
+In this lab, the change-email request only needs an `email` parameter. There is no CSRF token, no password re-entry,
+and no additional request-bound secret. That means a malicious page can fully construct the request in advance.
 
 ## 1) Reconnaissance & Findings
 
-I logged in using the provided `wiener:peter` account and tested the change-email function. By inspecting the request in Burp, I confirmed:
+I logged in using the provided `wiener:peter` account and tested the email-change function. By inspecting the request in
+Burp, I confirmed the following:
 
-- The action is performed via `POST /my-account/change-email`.
-- The request contains **no CSRF token** (or any other unpredictable, user-specific parameter).
-- The application identifies the user **solely via the session cookie**.
+- The action is performed through `POST /my-account/change-email`.
+- The request contains **no CSRF token** or other unpredictable validation parameter.
+- The application identifies the user **only through the session cookie**.
 
-This combination satisfies the classic prerequisites for CSRF.
+Together, these observations confirm the classic prerequisites for CSRF.
 
-### What the vulnerable request looks like (example)
-
-The request is essentially:
+### Example vulnerable request
 
 ```http
 POST /my-account/change-email HTTP/1.1
@@ -43,13 +44,14 @@ Content-Type: application/x-www-form-urlencoded
 email=<new_email_here>
 ```
 
-There is no per-request secret (token) that ties the action to a page the user intentionally visited.
+The application does not verify whether this request originated from a legitimate page intentionally used by the victim.
 
 ## 2) Weaponization (PoC)
 
-If the victim is logged in, the browser may automatically attach the victim’s cookies to a cross-site request (depending on cookie/SameSite behavior). This makes it possible to trigger the email change via a malicious HTML form.
+If the victim is logged in, the browser may automatically attach the victim's cookies to a cross-site request. That
+makes it possible to change the victim's email address through a malicious HTML form hosted on another origin.
 
-Using the lab’s Exploit Server, I prepared an auto-submitting PoC (the `action` host must match your lab instance):
+Using the lab's Exploit Server, I prepared an auto-submitting proof-of-concept page:
 
 ```html
 <html>
@@ -65,9 +67,11 @@ Using the lab’s Exploit Server, I prepared an auto-submitting PoC (the `action
 </html>
 ```
 
-### Why a simple auto-submit form is enough
+### Why this simple PoC is enough
 
-The attacker does **not** need to read the response (SOP/CORS often prevents reading cross-site responses anyway). They only need the victim’s browser to *send* the request with the victim’s cookies attached.
+The attacker does not need to read the response. They only need the victim's browser to **send** the forged request
+with the victim's authenticated session cookie attached. If the server trusts the cookie and performs no CSRF
+validation, the state-changing action succeeds.
 
 ## 3) Exploitation
 
@@ -77,40 +81,44 @@ In the Exploit Server:
 2. Click `Store`.
 3. Click `Deliver exploit to victim`.
 
-If the victim bot is authenticated to the target, the exploit triggers `POST /my-account/change-email` and changes the email address.
+When the victim bot visits the exploit page, the form auto-submits in the background and sends the forged
+`POST /my-account/change-email` request.
 
 ## Evidence (ordered)
 
-1. PoC stored in Exploit Server and delivered to the victim:
+1) The exploit HTML is prepared and stored in the Exploit Server:
 
 ![Exploit Server PoC](assets/01-exploit-server-poc.png)
 
-2. Account page shows the email has changed (result):
+2) After delivery, the account page shows the email address has changed successfully:
 
 ![My account email changed](assets/02-my-account-email-changed.png)
 
-3. Burp shows the change-email request (`POST /my-account/change-email`):
+3) Burp confirms the vulnerable state-changing request sent to `/my-account/change-email`:
 
 ![Burp change email request](assets/03-burp-change-email-request.png)
 
 ## Impact
 
-- The victim’s account email address can be changed to an attacker-controlled address.
-- This can enable account takeover via password reset or related account recovery flows.
+- The victim's account email can be changed to an attacker-controlled address.
+- This can enable account takeover through password reset or related recovery flows.
+- Any similar state-changing function without CSRF defenses may be exploitable in the same way.
 
 ## Recommendation (Fix)
 
 Primary fixes:
 
 - Implement **CSRF tokens** on all state-changing endpoints.
-- Enforce **Origin/Referer validation** as a defense-in-depth control (do not rely on it alone).
+- Validate the request **Origin** and/or **Referer** as a defense-in-depth measure.
 
-Hardening (defense-in-depth):
+Hardening:
 
-- Use cookie attributes where appropriate: `SameSite=Lax/Strict`, `Secure`, `HttpOnly`.
-- For sensitive actions, require **re-authentication** (password prompt / step-up auth).
+- Use cookie protections where appropriate: `SameSite=Lax/Strict`, `Secure`, `HttpOnly`.
+- Require **re-authentication** or step-up confirmation for especially sensitive actions such as password or email
+  changes.
 
 ## How to test the fix
 
-- Re-run the Exploit Server PoC: the request should be rejected (e.g., 403/CSRF error) and the email must not change.
-- Remove the token or send an invalid token: the action should still fail.
+- Re-run the Exploit Server PoC and verify the request is rejected.
+- Remove or tamper with the CSRF token and confirm the action still fails.
+- Check that the email does not change unless the request originates from a legitimate in-app form submission.

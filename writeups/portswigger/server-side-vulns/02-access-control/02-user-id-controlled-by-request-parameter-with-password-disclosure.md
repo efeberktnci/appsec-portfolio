@@ -5,26 +5,44 @@
 - Scope: Lab environment only (no real targets)
 - Date: 2026-05-11
 
+## Lab Description
+
+This lab uses a user-controlled `id` parameter to decide which account page to render. The account page also exposes the
+current password value inside the HTML response.
+
+Goal: access the administrator account page, recover the disclosed password, and use it to gain privileged access.
+
+## Overview (why this works)
+
+This is a broken access control / IDOR-style issue. The application should always map the authenticated session to the
+current user's own profile server-side, but instead it trusts a request parameter. Because the target profile also leaks
+the password field value, changing `id` to a privileged username immediately becomes an account takeover primitive.
+
 ## Summary
+
 The account page uses a user-controlled identifier (`id`) to decide which user's data to load. By setting `id` to a more
-privileged user (e.g., `administrator`), the application leaks that user's current password in the HTML response.
+privileged user such as `administrator`, the application leaks that user's current password in the HTML response.
 
 ## Steps to Reproduce (high-level)
-1. Log in as a low-priv user (e.g., `wiener:peter`) and open your account page.
-2. Change the request parameter to target another user:
-   - `GET /my-account?id=administrator`
-3. View the response in Burp and observe that the page contains the administrator's password value.
+
+1. Log in as a low-privilege user such as `wiener:peter`.
+2. Open the normal account page and observe that the request uses an `id` parameter.
+3. Change the request to `GET /my-account?id=administrator`.
+4. Inspect the response in Burp and observe that the administrator page loads.
+5. Locate the password field value in the returned HTML.
+6. Use the disclosed administrator password to log in and perform the privileged action required by the lab.
 
 ## Evidence
+
 Request:
 - `GET https://<lab-host>/my-account?id=administrator`
 
-Screenshot (Burp HTTP history):
-- `assets/password-disclosure-burp-history.webp`
+Screenshot:
 
 ![Burp HTTP history showing /my-account?id=administrator request](assets/password-disclosure-burp-history.webp)
 
-Response snippet:
+Response pattern:
+
 ```http
 HTTP/2 200 OK
 Content-Type: text/html; charset=utf-8
@@ -36,18 +54,23 @@ Content-Type: text/html; charset=utf-8
 ```
 
 ## Impact
-Credentials disclosure enables account takeover. If the disclosed account is an administrator, this can lead to full
-privilege escalation and destructive actions.
+
+Credential disclosure enables immediate account takeover. If the disclosed account is administrative, the result is full
+privilege escalation and access to restricted functionality.
 
 ## Severity
+
 - Rating: Critical
-- Rationale: Direct disclosure of admin password (immediate account takeover).
+- Rationale: Direct disclosure of a privileged account password.
 
 ## Recommendation
-- Enforce authorization server-side: the authenticated user must only access their own account data.
-- Do not prefill sensitive values (passwords) in responses. Store passwords hashed; never display them back.
-- Add tests to ensure `id` tampering cannot access other users’ data (IDOR/BOLA coverage).
+
+- Enforce authorization server-side so users can access only their own account data.
+- Never prefill password fields with real credentials or secrets.
+- Ensure passwords are stored hashed and are never rendered back to the client.
+- Add access-control tests to cover user-controlled identifier tampering (IDOR/BOLA).
 
 ## Retest Plan
-- Confirm `/my-account?id=administrator` returns 403/404 for non-admin users.
-- Confirm password fields are never pre-populated with real credentials.
+
+- Confirm `/my-account?id=administrator` returns a blocked response for non-admin users.
+- Confirm password fields are never populated with real credential values.

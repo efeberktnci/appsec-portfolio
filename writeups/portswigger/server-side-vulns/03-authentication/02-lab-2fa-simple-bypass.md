@@ -5,57 +5,106 @@
 - Scope: Lab environment only (no real targets)
 - Date: 2026-05-11
 
+## Lab Description
+
+This lab implements a two-factor authentication step after password login, but the application does not consistently
+enforce completion of that step before serving the authenticated account page.
+
+Goal: access Carlos's account without providing his 2FA code.
+
+## Overview (why this works)
+
+The application correctly prompts for a second factor after the username/password step, but it fails to bind access to
+`/my-account` to a server-side “2FA complete” state. In practice, this means the session becomes usable too early.
+
+The key observation in this lab is that we can first log in as our own user, complete 2FA normally, and learn the exact
+account-page URL pattern (`/my-account?id=<username>`). Then, when logging in as Carlos, we stop at the 2FA prompt and
+reuse that same URL pattern with Carlos's identifier. Because the backend does not strictly enforce the 2FA checkpoint,
+the victim account page loads anyway.
+
 ## Summary
-The application enforces 2FA during login, but the post-login account page (`/my-account`) can be accessed without
-completing the 2FA step. As a result, an attacker with valid credentials can bypass 2FA and access the victim's account.
+
+The application enforces 2FA during login, but the post-login account page (`/my-account`) can still be requested
+directly before the second factor is verified. As a result, an attacker with valid credentials can bypass 2FA and
+access the victim account.
 
 ## Steps to Reproduce
+
 1. Log in with your own account (`wiener:peter`).
-2. Open the in-lab **Email client**, read the 4-digit 2FA code, and complete 2FA.
-3. After successful login, go to **My account** and copy/record the account page URL format:
-   - Example format: `/my-account?id=<username>`
-   - This URL is reachable after login when 2FA is completed.
-4. Log out.
-5. Log in using the victim credentials (`carlos:montoya`).
-6. When the application prompts for the 2FA code, **do not** enter any code.
-7. In the browser address bar, use the URL format you copied in step 3 and update only the username/id value to the victim:
-   - Example: change `id=wiener` to `id=carlos`
-8. Load the page. If Carlos's account page loads, you have bypassed 2FA.
+2. Open the in-lab email client, retrieve the 4-digit security code, and complete the normal 2FA flow.
+3. After login succeeds, open `My account` and observe the account-page URL pattern:
+   - `/my-account?id=<username>`
+4. Log out from your own account.
+5. Log in again, this time using the victim credentials `carlos:montoya`.
+6. When the application prompts for the 2FA code, do **not** enter any code.
+7. While still at the 2FA checkpoint, manually change the URL in the address bar:
+   - reuse the known `/my-account?id=...` pattern
+   - replace your own identifier with the victim identifier, for example `id=carlos`
+8. Load the page and confirm that Carlos's account page is accessible without completing 2FA.
+
+## Attack Narrative
+
+This bypass works because the application is relying on the user’s navigation flow instead of a strict server-side
+authorization state. In a secure design, reaching the password step should not be enough to access authenticated pages;
+the session should remain restricted until 2FA is explicitly completed.
+
+In this lab, the normal flow gives us everything we need:
+- our own login proves what a valid post-2FA account URL looks like,
+- the victim login proves that the password is accepted,
+- and the 2FA prompt creates a false sense of protection even though the account page is still reachable directly.
 
 ## Evidence
-1) Our own login reaches the 2FA checkpoint (we can receive the code for our account):
-![2FA prompt shown after entering victim credentials](assets/02-2fa-01-2fa-prompt.png)
 
-2) We retrieve the 2FA code from the in-lab email client (for our account) and complete 2FA:
-![Email client containing the 2FA security code (for the low-priv user)](assets/02-2fa-02-email-code.png)
+1) Our own login reaches the 2FA checkpoint before code submission:
 
-3) We attempt to log in as the victim (`carlos:montoya`) and hit the 2FA prompt (no code entered):
+![2FA prompt shown after the first login step](assets/02-2fa-01-2fa-prompt.png)
+
+2) We retrieve the 2FA security code from the in-lab email client and complete the normal flow for our own account:
+
+![Email client containing the 2FA security code](assets/02-2fa-02-email-code.png)
+
+3) We then attempt to log in as Carlos. The password step succeeds and the application moves us to the 2FA screen:
+
 ![Logging in with victim credentials (carlos)](assets/02-2fa-03-login-carlos-creds.png)
 
-4) While still on the 2FA step, we switch the `id` in the `/my-account?id=...` URL to the victim and load the page:
+4) While still on the victim's 2FA checkpoint, we already know the post-login account URL format and can reuse it:
+
 ![2FA step URL after logging in as the victim](assets/02-2fa-04-carlos-2fa-url.png)
 
-5) Bypass confirmed: `/my-account?id=carlos` loads without submitting any 2FA code:
-![Bypass by navigating directly to /my-account while still at the 2FA step](assets/02-2fa-05-bypass-my-account.png)
+5) Direct navigation to `/my-account?id=carlos` works even though no victim 2FA code was submitted:
 
-6) Result: victim's account page loads (2FA bypass confirmed):
+![Bypass by navigating directly to the account page](assets/02-2fa-05-bypass-my-account.png)
+
+6) Result: Carlos's account page is exposed, confirming that 2FA can be bypassed through direct URL access:
+
 ![Victim account page loaded (bypass confirmed)](assets/02-2fa-06-carlos-account-page.png)
 
-
-
 ## Impact
-2FA bypass leads to account takeover whenever an attacker obtains valid credentials (phishing, credential stuffing, reuse).
+
+2FA bypass makes the second factor ineffective. Any attacker who already has valid credentials—through phishing,
+credential reuse, password spraying, or prior disclosure—can access the victim account without possessing the one-time
+security code.
 
 ## Severity
+
 - Rating: Critical
-- Rationale: 2FA is rendered ineffective; direct unauthorized access to accounts is possible.
+- Rationale: A core authentication defense is fully bypassed, enabling direct account takeover.
 
 ## Recommendation
-- Enforce 2FA server-side by binding a "2FA-complete" state to the session.
-- Block access to authenticated pages until 2FA is completed.
-- Re-check authorization on every request; do not rely on client-side navigation.
-- Add tests: attempt to access `/my-account` with a session that is not 2FA-complete (should be denied/redirected).
+
+- Bind a server-side `2FA-complete` state to the authenticated session.
+- Deny access to authenticated pages until that state is explicitly set.
+- Re-check authorization on every sensitive request instead of trusting the user’s navigation flow.
+- Add integration tests for direct URL access during incomplete 2FA sessions.
+
+## How to test the fix
+
+- Attempt to access `/my-account` before completing 2FA and verify the request is denied or redirected.
+- Repeat the bypass attempt in a new tab and by manually editing the URL.
+- Confirm the account page only becomes available after successful second-factor verification.
 
 ## Retest Plan
-- Verify `/my-account` is inaccessible until the session is marked 2FA-complete.
-- Verify bypass attempts (direct URL, opening in new tabs, replaying requests) fail consistently.
+
+- Verify `/my-account` is inaccessible until the session is marked `2FA-complete`.
+- Verify opening the account page in a new tab, changing the URL manually, or replaying the request all fail
+  consistently.
