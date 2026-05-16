@@ -3,7 +3,7 @@
 ![Track: AppSec](https://img.shields.io/badge/Track-AppSec-0B7285?style=for-the-badge)
 ![Focus: PortSwigger](https://img.shields.io/badge/Focus-PortSwigger-1C7ED6?style=for-the-badge)
 ![Status: Active](https://img.shields.io/badge/Status-Active-2F9E44?style=for-the-badge)
-![Last update](https://img.shields.io/badge/$12026--05--16-495057?style=for-the-badge)
+![Last update](https://img.shields.io/badge/Last%20update-2026--05--16-495057?style=for-the-badge)
 
 This repository is my AppSec / Product Security portfolio: lab write-ups, pentest-style findings, Secure SDLC artifacts
 (threat modeling, code review checklists), and CI/CD security demo outputs.
@@ -22,6 +22,9 @@ This repository is my AppSec / Product Security portfolio: lab write-ups, pentes
 
 ### OWASP Juice Shop
 - Reports section: coming soon
+
+## Threat Models
+- Threat model index: [threat-models/](threat-models/)
 
 ### CI/CD Security Demos
 - Companion repo: https://github.com/efeberktnci/appsec-tools-demo
