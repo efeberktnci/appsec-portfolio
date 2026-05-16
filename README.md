@@ -19,6 +19,13 @@ This repository is my AppSec / Product Security portfolio: lab write-ups, pentes
 
 #### Featured write-ups (PortSwigger)
 - [Server-side vulnerabilities (ordered)](writeups/portswigger/server-side-vulns/)
+- [CSRF](writeups/portswigger/csrf/)
+
+### TryHackMe
+- All TryHackMe write-ups: [writeups/tryhackme/](writeups/tryhackme/)
+
+#### Featured write-ups (TryHackMe)
+- In progress.
 
 ### OWASP Juice Shop
 - Reports section: coming soon
