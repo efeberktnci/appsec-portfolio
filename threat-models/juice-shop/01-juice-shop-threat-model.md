@@ -72,17 +72,13 @@ The goal is to model data flows and trust boundaries, not to mirror every intern
 
 ```mermaid
 flowchart LR
-  U["User Browser"] -->|HTTP (local)| UI["Juice Shop SPA (UI)"]
-  UI -->|API requests| API["Juice Shop Backend API"]
+  B["User Browser"] --> UI["Juice Shop SPA (UI)"]
+  UI --> API["Juice Shop Backend API"]
   API --> DB["Database / Storage"]
 
-  API -->|Optional| EMAIL["Email / Reset channel"]
-  API -->|Optional| OAUTH["Google OAuth/OIDC Provider"]
-  API -->|Optional| LLM["LLM Endpoint (AI chat integration)"]
-
-  classDef boundary stroke-dasharray: 5 5,stroke:#999;
-  B1["Trust Boundary: Browser <-> Server"]:::boundary
-  U --- B1 --- UI
+  API -.-> EMAIL["Email / Reset channel (optional)"]
+  API -.-> OAUTH["Google OAuth/OIDC Provider (optional)"]
+  API -.-> LLM["LLM Endpoint (optional)"]
 ```
 
 ## Trust Boundaries
@@ -169,4 +165,3 @@ Operational hygiene:
 7) Photo Wall (`/#/photo-wall`)
 
 ![Photo Wall page](assets/07-photo-wall.png)
-
