@@ -1,4 +1,5 @@
-<img width="299" height="168" alt="portswigger_white" src="https://github.com/user-attachments/assets/de9b76a3-44fd-4671-b549-6b33a035ae9b" />
+<img width="600" height="400" alt="1736310216414" src="https://github.com/user-attachments/assets/f87521e6-59ea-4a1b-b949-d8d6f23a9eec" />
+
 
 # PortSwigger Web Security Academy - Write-ups
 
