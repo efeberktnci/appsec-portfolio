@@ -15,25 +15,25 @@ This repository is my AppSec / Product Security portfolio: lab write-ups, pentes
 ## By Platform (pick a lab environment)
 
 ### PortSwigger Web Security Academy
-- All PortSwigger write-ups: [writeups/portswigger/](writeups/portswigger/)
+- **All write-ups:** [writeups/portswigger/](writeups/portswigger/)
 
 #### Featured write-ups (PortSwigger)
 - [Server-side vulnerabilities (ordered)](writeups/portswigger/server-side-vulns/)
 - [CSRF](writeups/portswigger/csrf/)
 
 ### TryHackMe
-- All TryHackMe write-ups: [writeups/tryhackme/](writeups/tryhackme/)
+- **All write-ups:** [writeups/tryhackme/](writeups/tryhackme/)
 
 #### Featured write-ups (TryHackMe)
-- In progress.
+- _In progress._
 
 ### OWASP Juice Shop
-- Reports section: coming soon
+- _Reports section: coming soon_
 
 ## Threat Models
 - Threat model index: [threat-models/](threat-models/)
 
-### CI/CD Security Demos
+## CI/CD Security Demos
 - Companion repo: https://github.com/efeberktnci/appsec-tools-demo
 
 ## Standard Finding Format
