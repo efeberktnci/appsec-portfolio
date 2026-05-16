@@ -1,3 +1,5 @@
+![PortSwigger Logo](assets/portswigger.png)
+
 # PortSwigger Web Security Academy - Write-ups
 
 ![Track: AppSec](https://img.shields.io/badge/Track-AppSec-0B7285?style=for-the-badge)
