@@ -1,4 +1,4 @@
-![PortSwigger Logo](assets/portswigger.png)
+<img width="299" height="168" alt="portswigger_white" src="https://github.com/user-attachments/assets/de9b76a3-44fd-4671-b549-6b33a035ae9b" />
 
 # PortSwigger Web Security Academy - Write-ups
 
