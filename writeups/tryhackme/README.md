@@ -4,7 +4,13 @@
 
 # Writeups for TryHackMe
 
-A collection of my personal notes and writeups from TryHackMe. I keep these primarily as a learning log, but I hope the structure is useful to others too.
+Welcome to my writeups for TryHackMe challenges, networks and walkthroughs.
+
+In addition, many modules and a few learning paths are included.
+
+These writeups are mainly a documentation for myself, but I hope others will benefit from them as well.
+
+This repository is a work in progress and will grow over time as I complete more rooms and paths.
 
 ## Content
 
