@@ -14,21 +14,13 @@ This repository is my AppSec / Product Security portfolio: lab write-ups, pentes
 
 ## By Platform (pick a lab environment)
 
-### PortSwigger Web Security Academy
-- **All write-ups:** [writeups/portswigger/](writeups/portswigger/)
+This section is intentionally short and scannable. Each platform has its own index README for details.
 
-#### Featured write-ups (PortSwigger)
-- [Server-side vulnerabilities (ordered)](writeups/portswigger/server-side-vulns/)
-- [CSRF](writeups/portswigger/csrf/)
-
-### TryHackMe
-- **All write-ups:** [writeups/tryhackme/](writeups/tryhackme/)
-
-#### Featured write-ups (TryHackMe)
-- _In progress._
-
-### OWASP Juice Shop
-- _Reports section: coming soon_
+| Platform | Index | Featured |
+|---|---|---|
+| **PortSwigger Web Security Academy** | [writeups/portswigger/](writeups/portswigger/) | [Server-side vulnerabilities (ordered)](writeups/portswigger/server-side-vulns/) · [CSRF](writeups/portswigger/csrf/) |
+| **TryHackMe** | [writeups/tryhackme/](writeups/tryhackme/) | _In progress_ |
+| **OWASP Juice Shop** | _Coming soon_ | _Coming soon_ |
 
 ## Threat Models
 - Threat model index: [threat-models/](threat-models/)
