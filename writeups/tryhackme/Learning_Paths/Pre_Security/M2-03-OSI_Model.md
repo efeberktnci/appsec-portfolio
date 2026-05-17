@@ -9,173 +9,190 @@
 Room link: https://tryhackme.com/room/osimodelzi
 
 ## Executive Summary
-- This room teaches the **OSI model** as a practical framework for reasoning about where communication breaks and where security controls apply.
-- The goal isn’t memorization; it’s to build “layer thinking”: *what is being addressed, routed, transported, and finally interpreted by the application?*
-- AppSec takeaway: many bugs are really **layer mismatches** (trust assumed at the wrong layer, validation applied at the wrong layer, or controls placed where they don’t help).
+This room introduces the **OSI (Open Systems Interconnection) model** as a practical framework to reason about networking. The big win is not memorizing seven names; it's learning to ask the right question at the right layer:
 
-> Note: any quiz answers/flags are blurred in screenshots. The captions focus on the concept shown, not the hidden answer text.
+- **What is the data called at this point?** (bits / frames / packets / segments)
+- **What kind of address is used here?** (MAC vs IP vs port)
+- **Where do we apply security controls?** (segmentation, firewalling, TLS, authentication, input validation)
+
+If you can map a symptom to a layer, you can debug faster and write more confident security notes.
 
 ---
 
-## Evidence (1–11) + detailed analysis
+## Evidence (1–11) + deep analysis
 
-### 1) Why layers exist (a shared troubleshooting language)
+### 1) OSI model overview + why "encapsulation" matters
 ![01](assets/M2-03-01.png)
 
-What you see:
-- The room frames OSI as a standard way to describe communication problems.
+This screenshot introduces the OSI stack (Layer 7 → Layer 1) and sets up a key idea used throughout networking: **encapsulation**.
 
-What it means:
-- Layers help you say *what kind* of failure you have without guessing:
-  - “Link down” (physical/data link),
-  - “No route” (network),
-  - “Port closed” (transport),
-  - “TLS handshake fails” (presentation),
-  - “HTTP 403 / auth failure” (application).
-
-Why this matters in AppSec:
-- It prevents false security assumptions (e.g., “it’s internal so it’s safe” → network layer trust instead of application-layer auth).
-
----
-
-### 2) OSI overview (seven buckets, one mental model)
-![02](assets/M2-03-02.png)
-
-What you see:
-- A diagram listing the seven OSI layers from physical → application.
-
-How to interpret it (without memorizing):
-- Each layer answers a different question:
-  - Physical: “how do bits move?”
-  - Data link: “how do neighbors talk locally?”
-  - Network: “how do we reach another network?”
-  - Transport: “which service/port and delivery behavior?”
-  - Session: “how do we keep a conversation state?”
-  - Presentation: “how is data encoded/encrypted?”
-  - Application: “what does the app protocol mean?”
-
----
-
-### 3) Physical layer (media, signal, reliability)
-![03](assets/M2-03-03.png)
-
-What you see:
-- Physical transport types (copper/fiber/wireless) and why the medium matters.
-
-Why it matters:
-- Many “app bugs” are actually physical instability (Wi‑Fi drops, bad cable, interference).
-- Physical access is also a security boundary: if an attacker can connect, they can often become “inside” very quickly.
-
----
-
-### 4) Data link layer (frames, MAC, local switching)
-![04](assets/M2-03-04.png)
-
-What you see:
-- Concepts around frames/MAC and local segment delivery.
-
-Interpretation:
-- L2 is where switching lives; it’s the “local neighborhood.”
-- MAC is an identifier, not authentication (spoofing is possible).
-
-Security angle:
-- VLAN boundaries, ARP behavior, and local MITM-style risks are rooted here.
-
----
-
-### 5) Network layer (IP + routing between networks)
-![05](assets/M2-03-05.png)
-
-What you see:
-- IP addressing and routing decisions are introduced/visualized.
-
-Interpretation:
-- L3 answers “where is the destination network and which next hop do we take?”
-
-AppSec mapping:
-- Many exposures are routing/segmentation failures (admin routes exposed publicly).
-- Threat model trust zones often align with routed boundaries plus firewall rules.
-
----
-
-### 6) Transport layer (TCP/UDP, ports, delivery semantics)
-![06](assets/M2-03-06.png)
-
-What you see:
-- TCP vs UDP and the concept of ports as service selectors.
-
-Interpretation:
-- TCP provides reliable delivery semantics (handshake, ordering).
-- UDP is lighter-weight but doesn’t guarantee delivery.
-
-Security angle:
-- A lot of policy is L4: “allow 443/tcp,” rate-limits, timeouts, scanning detection.
-
----
-
-### 7) Session layer (conversation state)
-![07](assets/M2-03-07.png)
-
-What you see:
-- Session is described as maintaining state across multiple exchanges.
-
-Why it matters:
-- It helps explain why “one request” ≠ “one conversation.”
+What this means in practice:
+- When an application sends data, each lower layer wraps it with its own metadata (headers/trailers).
+- Those "wrappers" are what allow the network to deliver the data correctly:
+  - **MAC** (Data Link) helps deliver inside the local network.
+  - **IP** (Network) helps route between networks.
+  - **Ports** (Transport) deliver to the right service/process.
 
 AppSec angle:
-- Application sessions (cookies/tokens) are not the same as OSI session, but the mental model helps reason about state, timeouts, and termination.
+- A lot of security mistakes come from trusting the wrong wrapper. Example: trusting a client-controlled header (app-layer) as if it proves identity (auth-layer). The OSI mental model helps separate "addressing" from "authentication".
 
 ---
 
-### 8) Presentation layer (format + encryption)
-![08](assets/M2-03-08.png)
+### 2) Layer 1 — Physical (bits on a medium)
+![02](assets/M2-03-02.png)
 
-What you see:
-- Data representation and encryption concepts.
+This screen focuses on the **physical layer**: cables, radio signals, and the concept that everything ultimately becomes **1s and 0s**.
 
-Interpretation:
-- Encoding/serialization and TLS/crypto live here conceptually.
+Key takeaway:
+- Physical layer is about *transporting bits*, not understanding meaning.
+- The "binary numbering system" callout is a reminder that higher-level data eventually becomes raw electrical/optical/radio signals.
 
 Security angle:
-- Real bugs here include parsing differences, encoding confusion, insecure serialization, and TLS misconfigurations.
+- Physical access is a trust boundary. If someone can plug in (or join Wi‑Fi), they may reach internal services unless later layers enforce isolation.
+- Many "network problems" start here: a bad cable or weak signal can look like an "app issue" until you test the lower layer.
 
 ---
 
-### 9) Application layer (protocol meaning: HTTP/DNS/SMTP…)
+### 3) Layer 2 — Data Link (frames, MAC, and the NIC)
+![03](assets/M2-03-03.png)
+
+This screenshot introduces **Data Link** and highlights two important parts:
+
+- **NIC (Network Interface Card)**: the hardware interface that connects a device to a network.
+- **MAC address**: the identifier associated with the NIC, used for local delivery.
+
+What’s really happening:
+- Data Link is "local neighborhood delivery". Switches operate here.
+- The layer receives a packet from Layer 3 and prepares it to be sent across the local medium as a **frame**.
+
+Security angle:
+- MAC addresses can be spoofed; they identify an interface but don't prove identity.
+- This is why network access control needs more than "allow known MACs". It can reduce casual abuse, but it’s not strong security by itself.
+
+---
+
+### 4) Layer 4 — Transport (TCP: reliability and ordering)
+![04](assets/M2-03-04.png)
+
+This screenshot is **Transport layer** focusing on **TCP**.
+
+What the table is teaching:
+- TCP trades speed for reliability:
+  - it checks delivery,
+  - can retransmit missing parts,
+  - keeps order so the receiver reconstructs data correctly.
+
+Why TCP matters in real systems:
+- Most web traffic is TCP (or QUIC over UDP, but reliability still matters).
+- If TCP is unstable, everything above it (TLS/HTTP/app) will feel broken or inconsistent.
+
+Security angle:
+- Firewalls and rate limits often live at Layer 4 (ports/protocols).
+- Many basic exposure problems are simply "a sensitive service is listening on a reachable port".
+
+---
+
+### 5) Transport (UDP: speed over guarantees)
+![05](assets/M2-03-05.png)
+
+This screenshot transitions to **UDP** and shows a visual where only some packets arrive, so the final image is incomplete.
+
+Interpretation:
+- UDP does not guarantee delivery, ordering, or retransmission.
+- It can be faster and is useful where occasional loss is acceptable (streaming, discovery protocols, etc.).
+
+Security angle:
+- UDP-based services are commonly used for discovery and infrastructure.
+- "Fast but lossy" changes how you debug: packet capture becomes more important because retry behavior isn’t built-in like TCP.
+
+---
+
+### 6) UDP example in practice (why dropped chunks are expected)
+![06](assets/M2-03-06.png)
+
+This screenshot continues the UDP concept using the same "packets of an image" idea.
+
+What to learn:
+- UDP is acceptable when the consumer can tolerate missing data (e.g., a few missing pixels in video).
+- It also reinforces the core OSI habit: **the same app behavior can differ just by changing the transport protocol**.
+
+AppSec angle:
+- Some defenses assume reliable delivery (rate limits, replay detection, etc.). With UDP, you must design with loss/reordering in mind.
+
+---
+
+### 7) Layer 3 — Network (IP addressing + routing)
+![07](assets/M2-03-07.png)
+
+This screenshot introduces the **Network layer**: IP addressing and routing between networks.
+
+What "Network layer" answers:
+- "Where is the destination network?"
+- "What next hop/router should this packet go to?"
+
+Security angle:
+- A large part of security is deciding which networks can route to which other networks (segmentation).
+- Misrouting or over-broad exposure is how internal-only functionality becomes reachable.
+
+---
+
+### 8) Layer 5 — Session (state across multiple exchanges)
+![08](assets/M2-03-08.png)
+
+This screenshot explains **Session layer** as maintaining a conversation between endpoints.
+
+How to think about it:
+- The session layer is about *continuity* (keeping track of a multi-step interaction).
+- In web apps, sessions are usually represented with cookies/tokens, but the OSI session concept is more general than "cookie = session".
+
+AppSec angle:
+- Session management is where many bugs live: weak session IDs, missing rotation, bad timeout logic, or confusing "logged in" state.
+
+---
+
+### 9) Layer 6 — Presentation (encoding + encryption)
 ![09](assets/M2-03-09.png)
 
-What you see:
-- Application protocols are introduced as “what users/applications actually interact with.”
+This screenshot covers **Presentation layer**: data representation and encryption.
 
-AppSec mapping:
-- Most web vulns we report (XSS/SQLi/CSRF/access control) are application-layer issues.
-- Fixes usually must happen here even if the symptom appears lower (e.g., firewall blocks ≠ proper auth).
+What this means in web contexts:
+- TLS encryption, character encoding (UTF‑8), and serialization formats (JSON) relate to how data is represented.
+
+Security angle:
+- Encoding/decoding mistakes create real-world issues: validation bypass via encoding tricks, parser differentials, and TLS misconfigurations.
 
 ---
 
-### 10) Mapping a real request across layers
+### 10) Layer 7 — Application (protocol meaning: HTTP, DNS, SMTP, …)
 ![10](assets/M2-03-10.png)
 
-What you see:
-- A practical mapping exercise (browser → HTTP → TCP → IP → Ethernet/Wi‑Fi).
+This screenshot frames the **Application layer** as "what the application understands": protocols and semantics.
 
-Why it matters:
-- This is the real skill: taking an observed failure and knowing what layer to test next (DNS, TCP connect, TLS, HTTP status, app logs).
+Why this is the AppSec home base:
+- Most vulnerabilities you write reports on are Layer 7: access control, injection, XSS, CSRF, auth/session flaws.
+
+Important nuance:
+- Lower-layer controls can reduce exposure, but **correct authorization and validation must still happen at the application layer**.
 
 ---
 
-### 11) Knowledge check (blurred)
+### 11) Knowledge check (answers blurred)
 ![11](assets/M2-03-11.png)
 
-What it validates:
-- You can map common identifiers (MAC, IP, port, protocol) to the correct layer and avoid mixing concepts.
+This final screen validates the room’s core skill: mapping concepts to layers without mixing them up.
+
+What you should be able to do after this room:
+- Distinguish **MAC vs IP vs port** (and know what each is used for).
+- Explain why a "port open" is a transport-layer fact, while "403 forbidden" is an application-layer decision.
+- Approach troubleshooting systematically: start low if nothing works; start high if the app responds but behaves wrong.
 
 ---
 
-## Summary
-The OSI model is useful only if it changes your behavior:
-- isolate problems systematically,
-- place controls at the right layer,
-- avoid trusting the wrong layer.
+## Summary (how to use OSI going forward)
+When something breaks (or when you're threat modeling), OSI gives you a checklist:
 
-This becomes a baseline skill for threat modeling, debugging, and writing confident security reports.
+- **L1/L2:** Is the device even connected locally?
+- **L3:** Can it route to the target network?
+- **L4:** Is the service reachable on the expected port/protocol?
+- **L5/L6:** Is session/encryption/encoding behaving?
+- **L7:** Does the application correctly authenticate, authorize, and validate input?
