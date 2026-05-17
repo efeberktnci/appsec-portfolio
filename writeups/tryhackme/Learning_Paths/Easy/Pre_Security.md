@@ -15,7 +15,7 @@
 
 - [What is Networking?](../Pre_Security/M2-01-What_is_Networking.md)
 - [Intro to LAN](../Pre_Security/M2-02-Intro_to_LAN.md)
-- [OSI Model](../Walkthroughs/Info/OSI_Model.md)
+- [OSI Model](../Pre_Security/M2-03-OSI_Model.md)
 - [Packets & Frames](../Walkthroughs/Info/Packets_and_Frames.md)
 - [Extending Your Network](../Walkthroughs/Info/Extending_Your_Network.md)
 
