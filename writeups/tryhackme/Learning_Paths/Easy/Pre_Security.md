@@ -22,3 +22,4 @@
 ### Module 3: How The Web Works
 
 - [DNS in Detail](../Pre_Security/M3-01-DNS_in_Detail.md)
+- [HTTP in Detail](../Pre_Security/M3-02-HTTP_in_Detail.md)
