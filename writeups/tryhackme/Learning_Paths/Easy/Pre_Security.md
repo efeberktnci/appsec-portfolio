@@ -21,4 +21,4 @@
 
 ### Module 3: How The Web Works
 
-- (Coming soon)
+- [DNS in Detail](../Pre_Security/M3-01-DNS_in_Detail.md)
