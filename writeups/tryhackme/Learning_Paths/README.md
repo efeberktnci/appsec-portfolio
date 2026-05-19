@@ -29,3 +29,4 @@
 - [Module 6 - JavaScript Simple Demo](Pre_Security/M6-04-JavaScript_Simple_Demo.md)
 - [Module 6 - Database SQL Basics](Pre_Security/M6-05-Database_SQL_Basics.md)
 - [Module 7 - The CIA Triad](Pre_Security/M7-01-The_CIA_Triad.md)
+- [Module 7 - Cryptography Concepts](Pre_Security/M7-02-Cryptography_Concepts.md)
