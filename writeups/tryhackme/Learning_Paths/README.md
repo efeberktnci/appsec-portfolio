@@ -26,3 +26,4 @@
 - [Module 6 - Data Representation](Pre_Security/M6-01-Data_Representation.md)
 - [Module 6 - Data Encoding](Pre_Security/M6-02-Data_Encoding.md)
 - [Module 6 - Python Simple Demo](Pre_Security/M6-03-Python_Simple_Demo.md)
+- [Module 6 - JavaScript Simple Demo](Pre_Security/M6-04-JavaScript_Simple_Demo.md)
