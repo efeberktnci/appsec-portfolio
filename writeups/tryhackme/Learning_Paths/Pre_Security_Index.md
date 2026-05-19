@@ -45,3 +45,4 @@
 ### Module 6: Data Representation
 
 - [Data Representation](../Pre_Security/M6-01-Data_Representation.md)
+- [Data Encoding](../Pre_Security/M6-02-Data_Encoding.md)
