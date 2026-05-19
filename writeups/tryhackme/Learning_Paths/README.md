@@ -4,7 +4,7 @@
 
 ## Easy Learning Paths
 
-- [Pre Security](Easy/Pre_Security.md)
+- [Pre Security](Pre_Security_Index.md)
   - [Module 1 - Offensive Security Intro](../Pre_Security/M1-01-Offensive_Security_Intro.md)
   - [Module 1 - Defensive Security Intro](../Pre_Security/M1-02-Defensive_Security_Intro.md)
   - [Module 2 - What is Networking?](../Pre_Security/M2-01-What_is_Networking.md)
@@ -27,10 +27,7 @@
   - [Module 5 - Windows CLI Basics](../Pre_Security/M5-04-Windows_CLI_Basics.md)
   - [Module 5 - Operating System Security](../Pre_Security/M5-05-Operating_System_Security.md)
   - [Module 6 - Data Representation](../Pre_Security/M6-01-Data_Representation.md)
-- [Cyber Security 101](Easy/Cyber_Security_101.md)
-- [Web Fundamentals](Easy/Web_Fundamentals.md)
-- [SOC Level 1 (Legacy)](Easy/SOC_Level_1_Legacy.md)
-
-## Medium Learning Paths
-
-- [Jr Penetration Tester](Medium/Jr_Penetration_Tester.md)
+- [Cyber Security 101](Cyber_Security_101.md)
+- [Web Fundamentals](Web_Fundamentals.md)
+- [SOC Level 1 (Legacy)](SOC_Level_1_Legacy.md)
+- [Jr Penetration Tester](Jr_Penetration_Tester.md)
