@@ -30,3 +30,4 @@
 - [Module 6 - Database SQL Basics](Pre_Security/M6-05-Database_SQL_Basics.md)
 - [Module 7 - The CIA Triad](Pre_Security/M7-01-The_CIA_Triad.md)
 - [Module 7 - Cryptography Concepts](Pre_Security/M7-02-Cryptography_Concepts.md)
+- [Module 7 - Become a Hacker](Pre_Security/M7-03-Become_a_Hacker.md)
