@@ -32,3 +32,7 @@
 - [Module 7 - Cryptography Concepts](Pre_Security/M7-02-Cryptography_Concepts.md)
 - [Module 7 - Become a Hacker](Pre_Security/M7-03-Become_a_Hacker.md)
 - [Module 7 - Become a Defender](Pre_Security/M7-04-Become_a_Defender.md)
+
+## Cyber Security 101
+
+- [Module 1 - Search Skills](Cyber_Security_101/M1-01-Search_Skills.md)
