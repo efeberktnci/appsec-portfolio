@@ -2,8 +2,6 @@
 
 # Learning Paths
 
-## Learning Paths
-
 - [Pre Security](Pre_Security_Index.md)
   - [Module 1 - Offensive Security Intro](../Pre_Security/M1-01-Offensive_Security_Intro.md)
   - [Module 1 - Defensive Security Intro](../Pre_Security/M1-02-Defensive_Security_Intro.md)
@@ -28,7 +26,3 @@
   - [Module 5 - Operating System Security](../Pre_Security/M5-05-Operating_System_Security.md)
   - [Module 6 - Data Representation](../Pre_Security/M6-01-Data_Representation.md)
   - [Module 6 - Data Encoding](../Pre_Security/M6-02-Data_Encoding.md)
-- [Cyber Security 101](Cyber_Security_101.md)
-- [Web Fundamentals](Web_Fundamentals.md)
-- [SOC Level 1 (Legacy)](SOC_Level_1_Legacy.md)
-- [Jr Penetration Tester](Jr_Penetration_Tester.md)
