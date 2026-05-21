@@ -9,63 +9,90 @@
 Room link: https://tryhackme.com/room/linuxfundamentalspart3
 
 ## Executive Summary
-- This room moves from navigation and file basics into everyday Linux operations that are directly useful for security workflows.
-- The screenshots focus on package/software management, service/process handling, automation with cron, and log-oriented troubleshooting habits.
-- The practical value is operational discipline: knowing not only what command to run, but also how to verify system state before and after each action.
+- Bu room, Linux’te günlük kullanım komutlarından sistem yönetimi davranışına geçiş yaptırıyor.
+- Özellikle metin editörleri, dosya transferi, web üzerinden dosya sunma, process yönetimi, cron otomasyonu, paket depoları ve log analizi odakta.
+- Ekran görüntülerindeki akış “komutu ezberle” değil, “komutun sistemde neyi değiştirdiğini doğrula” yaklaşımını öğretiyor.
 
 ## Evidence + Screenshot-based Analysis
 
-### 1) Room scope and transition to admin-style Linux usage
+### 1) Part 3 girişi: room hedefleri
 ![01](assets/M2-03-01.png)
-This opening screenshot frames Part 3 as a progression from user-level command familiarity into host management responsibilities. The text emphasis is no longer “learn Linux commands” but “use Linux like an operator”: install/remove components, inspect running state, and reason about background activity. That shift is important for AppSec and security engineering because many findings are reproducible only if you understand host state (services, packages, scheduled tasks) and can control it safely.
+Bu ilk görselde Tux figürü ile birlikte room’un kapsamı net yazıyor: Linux Fundamentals serisinin son kısmında otomasyon, package management ve service/application logging gibi günlük hayatta sürekli kullanılacak başlıklar anlatılacak. Bu, önceki part’lerdeki “temel komut” yaklaşımından daha operasyonel bir seviyeye geçtiğimizi gösteriyor. Özellikle “day-to-day utilities” vurgusu, bu room’un sadece CTF değil gerçek sistem yönetimi pratiğine dönük tasarlandığını açıkça hissettiriyor.
 
-### 2) Why package management matters in real systems
+### 2) Terminal text editors: neden gerektiği
 ![02](assets/M2-03-02.png)
-Here the room explains software distribution through package managers and repositories. The visible flow teaches that packages are not random files; they are curated bundles with metadata, dependencies, and version constraints. The security implication is strong: package source trust and update hygiene affect supply-chain exposure, patch speed, and operational stability. In practice, being able to query what is installed and from where is one of the first checks in hardening and incident response.
+İkinci görselde “echo” ve pipe ile tek satır yazmanın yetersiz kaldığı anlatılıyor ve doğrudan terminal editörlerine geçiliyor. Nano ile başlanması önemli; çünkü hızlı öğrenilebilir, kısa sürede dosya üretme/düzenleme imkânı veriyor. Görselde `nano filename` kullanımı ve editör açıldıktan sonra doğrudan metin girme süreci gösterilerek, bir Linux kullanıcısının “config dosyası editleme” refleksi inşa ediliyor.
 
-### 3) Repository/update workflow before installation
+### 3) Nano kısayolları ve VIM’e geçiş mantığı
 ![03](assets/M2-03-03.png)
-This screenshot emphasizes update-before-install behavior and shows that package operations rely on current repository indexes. That detail matters because stale metadata leads to failed installs, wrong versions, or missing dependency paths. The room’s sequence teaches a healthy workflow: refresh package indexes, install deliberately, then validate. For security work, this is equivalent to reducing configuration drift and ensuring deterministic reproduction of lab or production environments.
+Bu görselde Nano’nun temel kullanımına ek olarak Ctrl tabanlı kısa yollar (arama, satır atlama, çıkış vb.) anlatılıyor; hemen ardından VIM’in daha gelişmiş ama öğrenmesi daha zor bir editör olduğu vurgulanıyor. Buradaki pedagojik mesaj net: önce işini görecek minimum editör becerisini kazan, sonra daha güçlü araçlara geç. VIM’in syntax highlighting ve terminal bağımsızlığı gibi artıları özellikle uzun vadeli Linux becerisi için neden önemli olduğunu gösteriyor.
 
-### 4) Installing, removing, and verifying packages
+### 4) Nano ile pratik görev ve dosya düzenleme doğrulaması
 ![04](assets/M2-03-04.png)
-The terminal outputs here demonstrate lifecycle operations: install a package, confirm it exists, remove it when done, and verify the change. The critical concept is reversibility and verification. You are not just “running apt commands”; you are managing system state with evidence. In secure environments, this habit prevents unnoticed tool sprawl and supports clean rollback when a dependency introduces risk or breaks expected behavior.
+Dördüncü görsel teoriyi pratiğe bağlıyor: “task3” dosyasını Nano ile açıp içeriği düzenleme ve flag doğrulama akışı var. Sağ tarafta canlı terminal ekranında Nano penceresi açık, solda görev cevapları bulunuyor. Bu kombinasyon, sadece komutu yazmanın yetmediğini; dosyayı gerçekten doğru yerde, doğru içerikle değiştirip sonucu doğrulaman gerektiğini gösteriyor.
 
-### 5) Service management basics (start/stop/status)
+### 5) General/Useful Utilities başlangıcı: `wget` ve `scp`
 ![05](assets/M2-03-05.png)
-This section shows service-oriented control: starting a daemon, stopping it, and inspecting status to validate action outcomes. The screenshot content ties command execution to observable runtime state, which is exactly how blue-team and AppSec troubleshooting works. A command success message alone is not enough—you verify the service state and read status context to confirm the process is truly healthy.
+Bu ekran, dosya transferinin iki temel senaryosunu aynı anda öğretiyor: web üzerinden alma (`wget`) ve SSH üzerinden iki makine arasında güvenli kopyalama (`scp`). Tablo yapısıyla source/destination değişkenleri tek tek açılmış; bu çok kritik çünkü `scp`’de hata çoğunlukla hangi tarafın kaynak, hangi tarafın hedef olduğunu karıştırmaktan doğar. Görselin alt mesajı: komut sözdizimini ezberlemek yerine, transfer yönü mantığını öğren.
 
-### 6) Enabling persistence and boot-time behavior
+### 6) `scp` yön değişimi + Python HTTP server ile dosya servis etme
 ![06](assets/M2-03-06.png)
-The screenshot highlights persistent service configuration (enable/disable patterns) and the difference between “running now” vs “starting on boot.” This distinction is operationally crucial. Many misconfigurations happen when teams think a service is controlled because it was stopped once, while it silently returns after reboot. For secure operations, startup persistence is part of attack surface control and should be intentionally managed.
+Bu görsel bir üst seviyeye çıkıyor: aynı `scp` mantığının ters yönde nasıl kurulduğu anlatılıyor, ardından `python3 -m http.server` ile lokal dizini hızlıca web sunucuya çevirme gösteriliyor. Buradaki kritik detay port bilgisi (8000) ve ikinci terminal ihtiyacı. Yani bir terminalde sunucu çalışırken, diğer terminalde istemci komutunu (wget/curl) çalıştırma zorunluluğu anlatılıyor.
 
-### 7) Process visibility and runtime introspection
+### 7) `wget` ile aktif local web server’dan indirme akışı
 ![07](assets/M2-03-07.png)
-This evidence shows process inspection techniques: listing active processes, understanding ownership, and identifying long-running vs transient tasks. The room’s text and terminal layout reinforce that process tables are a live map of system activity. In security contexts, that map helps answer key questions quickly: what is running, under which user, with what command line, and whether behavior aligns with expected baseline.
+Yedinci ekran, önceki teorinin çıktısını gerçek terminal log’u ile kanıtlıyor: HTTP request -> 200 OK -> dosyanın kaydedilmesi -> transfer yüzdesi. Ayrıca görselin altındaki çift terminal diyagramı, “aynı oturumda her şeyi yapamazsın” problemini çözüyor. Bu, lab ortamında sık düşülen bir hatayı (sunucu process’ini kesmeden indirme denemesi) pratik olarak engelliyor.
 
-### 8) Process control and safe termination patterns
+### 8) Görev doğrulaması: server başlatma, dosya indirme, içerik kontrol
 ![08](assets/M2-03-08.png)
-The screenshot presents process interruption/termination workflows and usually differentiates gentle termination from forceful kill behavior. The practical lesson is controlled intervention: terminate with minimal disruption first, then escalate only if needed. This discipline matters in production security incidents where over-aggressive kills can remove evidence or cause service impact. Good operators preserve context while regaining control.
+Bu görselde solda sorular, sağda terminal kanıtı birlikte yer alıyor: HTTP server’ın çalıştığı log satırı, ardından hedef dosyanın indirildiği ve içeriğinin okunduğu adımlar görünüyor. Burada önemli olan “komutu çalıştırdım” değil; adım adım doğrulama zinciri kurmak: server ayakta mı, istek geldi mi, dosya indi mi, içerik doğru mu.
 
-### 9) Scheduling with cron and task automation mindset
+### 9) Processes 101: PID kavramı ve `ps`/`top` görünürlüğü
 ![09](assets/M2-03-09.png)
-This section introduces cron-based scheduling and the concept of recurring system tasks. The key insight is that automation is both productivity and risk: scheduled jobs can keep maintenance consistent, but misconfigured cron entries can also become persistence vectors or accidental DoS sources. The screenshot’s structure teaches reading schedules carefully and understanding execution frequency, user context, and command intent.
+Dokuzuncu görsel process kavramını netleştiriyor: her çalışan program bir PID alır ve bu kimlik process yönetiminin temelidir. `ps`, `ps aux` ve `top` çıktılarıyla “kimin çalıştığı, ne kadar kaynak kullandığı, hangi kullanıcıya ait olduğu” okunuyor. Bu bölüm özellikle güvenlikte önemli; çünkü şüpheli süreç avı veya performans anomalisinde ilk bakılan yer process listeleridir.
 
-### 10) Crontab structure and time-field semantics
+### 10) Process signals: `kill`, SIGTERM, SIGKILL, SIGSTOP
 ![10](assets/M2-03-10.png)
-The room breaks down cron expression components (minute/hour/day/month/weekday) and links syntax to actual execution behavior. The deeper value here is precision: one wrong field can turn a daily task into an every-minute flood. In AppSec/DevSecOps workflows, controlled scheduling for scans, backups, or log tasks depends on exact timing semantics, so syntax fluency directly affects reliability and system safety.
+Bu görselde process sonlandırmanın kaba kuvvet olmadığını, sinyal türüne göre davranış değiştiğini görüyoruz. SIGTERM ile temiz kapanış şansı verilirken SIGKILL anlık keser; SIGSTOP ise askıya alır. Ayrıca system boot’ta PID 1 ile başlayan süreç ağacı ve `systemd` ilişkisi anlatılıyor. Bu, Linux’ta process yönetiminin sadece “kapat-aç” değil, yaşam döngüsü mantığıyla ele alınması gerektiğini öğretiyor.
 
-### 11) Logging mindset: where evidence lives
+### 11) `systemctl` + foreground/background çalışma modeli
 ![11](assets/M2-03-11.png)
-This screenshot transitions to logs as the primary evidence trail for what happened on a Linux host. The text and examples underline that commands and services are only half the story; logs tell you timing, errors, and historical sequence. Security relevance is immediate: for debugging, detection, and post-incident reconstruction, knowing where logs are stored and how to read them quickly is a core competency.
+Bu ekranda iki kritik operasyon birlikte var: servisleri boot’a bağlama (`systemctl start/stop/enable/disable/status`) ve komutları foreground/background yönetimi (`&`, `Ctrl+Z`). Özellikle uzun çalışan script örneği, terminali kilitleyen job’ları geri plana almanın neden gerekli olduğunu çok iyi gösteriyor. Bu, hem üretkenlik hem de incident anında hızlı müdahale için önemli bir kas.
 
-### 12) Final practical checkpoint and integrated workflow
+### 12) `fg` ile geri öne alma (foreground)
 ![12](assets/M2-03-12.png)
-The last screenshot acts as an integration checkpoint. Instead of isolated commands, it validates end-to-end operator flow: install/manage software, verify service/process state, understand scheduled execution, and interpret resulting behavior via logs. This is the exact mental model Linux security work needs: action -> verification -> evidence, repeated consistently.
+On ikinci görsel, arkaya alınmış bir işi (`background.sh`) tekrar etkileşimli hâle getirmeyi gösteriyor. `ps aux` ile job doğrulanıyor, `fg` ile terminal kontrolü tekrar o sürece veriliyor. Bu detay pratikte çok değerlidir; çünkü yanlışlıkla arka plana attığın işlemi bulup geri çağırabilmek, özellikle canlı sistemde manuel bakım sırasında sürekliliği korur.
+
+### 13) Task 5 checkpoint: process ve service komutlarının ölçülmesi
+![13](assets/M2-03-13.png)
+Bu ekran quiz tarafı gibi görünse de sağdaki terminalde aktif process listesiyle birlikte gerçek uygulama kanıtı var. Soruların odağı PID artışı, “clean kill” sinyali, spesifik process tespiti, service durdurma ve boot’ta başlatma komutları. Yani teorik başlıkların hepsi operasyonel komutlara dönüştürülerek ölçülüyor.
+
+### 14) Automation: cron/crontab temeli
+![14](assets/M2-03-14.png)
+Bu görsel cron yapısını sistematik biçimde anlatıyor: MIN/HOUR/DOM/MON/DOW/CMD alanları ve wildcard `*` kullanımı. Verilen örnek (`0 */12 * * * ...`) ile periyodik backup mantığı kuruluyor. Buradaki ana kazanım, cron ifadesini ezberlemek değil; zaman alanlarını doğru okuyup bir işi ne sıklıkta, hangi bağlamda çalıştırdığını güvenle tahmin etmek.
+
+### 15) Cron job oluşturma ve deployed instance üzerinde doğrulama
+![15](assets/M2-03-15.png)
+Bu ekran solda cron üretici çıktısını, altta crontab örneğini, sağda ise gerçek terminalde `crontab -l` doğrulamasını birleştiriyor. Yani sadece formül üretmek değil, sistemde gerçekten yazılıp yazılmadığını kontrol etmek öğretiliyor. Güvenlik bakışında bu çok önemli; persistence ya da otomatik görev analizi yaparken önce kayıtlı cron işlerini doğrulamak gerekir.
+
+### 16) Package management: repo dosyaları ve `apt` akışı
+![16](assets/M2-03-16.png)
+Bu görselde `/etc/apt` altındaki kaynak dosyalar ve repository mantığı anlatılıyor; ardından GPG key ekleme, yeni kaynak tanımı oluşturma (`sources.list.d`) ve `apt update`/`apt install` hattı gösteriliyor. Buradaki kritik fikir “paketi kurmak”tan önce “paket kaynağını güvenli şekilde tanımlamak.” Yani güven zinciri repo seviyesinde başlıyor.
+
+### 17) Repo ekleme/silme çevrimi ve tersine alınabilirlik
+![17](assets/M2-03-17.png)
+On yedinci ekran, repository ekleme adımlarının tamamlanmasını ve gerektiğinde geri alınmasını gösteriyor. “Okuyup geç” gibi görünse de pratik etkisi büyük: test amaçlı eklenen repo ya da araçların kalıcı iz bırakmaması için kaldırma adımlarını bilmek gerekiyor. Bu, lab hijyeni ve sistem stabilitesi açısından kritik bir alışkanlık.
+
+### 18) Logs: `/var/log` ekosistemi ve servis bazlı gözlem
+![18](assets/M2-03-18.png)
+Bu görsel log yönetimini çok net konumlandırıyor: Apache, fail2ban, UFW gibi servislerin log dosyaları tek dizin ekosisteminde görülüyor. Ayrıca log rotation kavramı (sıkıştırılmış/eski loglar) görselde doğrudan hissediliyor. Bu sayede “tek dosya oku” yaklaşımından çıkıp, servis ailesi boyunca iz sürme alışkanlığı gelişiyor.
+
+### 19) Apache loglarını okuyarak olayı kanıta bağlama
+![19](assets/M2-03-19.png)
+Son görselde görev soruları ve canlı terminal çıktısı aynı karede: `access.log` okunuyor ve ziyaret eden istemci IP’si ile erişilen dosya çıkarılıyor. Bu, room’un final mesajı: loglar yalnızca teknik detay değil, doğrudan olay anlatısıdır. Kim geldi, ne istedi, ne zaman istedi sorularını cevaba çeviren temel kaynak burada operasyonel olarak doğrulanmış oluyor.
 
 ## Key Takeaways
-- Linux Part 3 is about host operation, not just command memorization.
-- Package/service/process/cron/logs form one connected operational system.
-- Verification after every change is the habit that prevents silent mistakes.
-- Security value comes from traceability: understand what changed, when, and why.
-- This room builds the baseline needed for later hardening, troubleshooting, and incident-response rooms.
+- Part 3, Linux kullanımını “komut bilgisi”nden “sistem işletme” seviyesine taşıyor.
+- Editor, transfer, process, cron, repo ve log başlıkları tek bir operasyon zincirinin parçaları.
+- Her adımda komut + doğrulama (çıktı/log) birlikte ele alınınca hata oranı ciddi düşer.
+- Security pratiğinde en değerli refleks: değişiklik yap, etkisini ölç, kanıtını topla.
