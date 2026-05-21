@@ -36,3 +36,8 @@
 ## Cyber Security 101
 
 - [Module 1 - Search Skills](Cyber_Security_101/M1-01-Search_Skills.md)
+- [Module 2 - Linux Fundamentals Part 1](Cyber_Security_101/M2-01-Linux_Fundamentals_Part_1.md)
+- [Module 2 - Linux Fundamentals Part 2](Cyber_Security_101/M2-02-Linux_Fundamentals_Part_2.md)
+- [Module 2 - Linux Fundamentals Part 3](Cyber_Security_101/M2-03-Linux_Fundamentals_Part_3.md)
+- [Module 3 - Windows Fundamentals 1](Cyber_Security_101/M3-01-Windows_Fundamentals_1.md)
+- [Module 3 - Windows Fundamentals 2](Cyber_Security_101/M3-02-Windows_Fundamentals_2.md)
