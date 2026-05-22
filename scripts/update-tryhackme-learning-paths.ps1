@@ -17,6 +17,7 @@ function Get-TitleFromFileName([string]$name) {
     "M2-03-OSI_Model" = "Module 2 - OSI Model"
     "M3-01-DNS_in_Detail" = "Module 3 - DNS in Detail"
     "M3-02-HTTP_in_Detail" = "Module 3 - HTTP in Detail"
+    "M3-04-Windows_AD_Basics" = "Module 3 - Windows AD Basics"
     "M4-03-Client_Server_Basics" = "Module 4 - Client-Server Basics"
     "M5-01-Operating_Systems_Introduction" = "Module 5 - Operating Systems: Introduction"
     "M5-03-Linux_CLI_Basics" = "Module 5 - Linux CLI Basics"
@@ -44,8 +45,10 @@ function Get-TitleFromFileName([string]$name) {
 $preFiles = Get-ChildItem -Path (Join-Path $lpDir "Pre_Security") -File -Filter "M*.md" | Sort-Object Name
 $cyberFiles = Get-ChildItem -Path (Join-Path $lpDir "Cyber_Security_101") -File -Filter "M*.md" | Sort-Object Name
 
+$today = Get-Date -Format "yyyy--MM--dd"
+
 $lines = @()
-$lines += '![Last update](https://img.shields.io/badge/Last%20update-2026--05--19-495057?style=for-the-badge)'
+$lines += "![Last update](https://img.shields.io/badge/Last%20update-$today-495057?style=for-the-badge)"
 $lines += ''
 $lines += '# Learning Paths'
 $lines += ''

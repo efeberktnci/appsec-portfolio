@@ -1,4 +1,4 @@
-﻿![Last update](https://img.shields.io/badge/Last%20update-2026--05--19-495057?style=for-the-badge)
+﻿![Last update](https://img.shields.io/badge/Last%20update-2026--05--23-495057?style=for-the-badge)
 
 # Learning Paths
 
@@ -41,3 +41,5 @@
 - [Module 2 - Linux Fundamentals Part 3](Cyber_Security_101/M2-03-Linux_Fundamentals_Part_3.md)
 - [Module 3 - Windows Fundamentals 1](Cyber_Security_101/M3-01-Windows_Fundamentals_1.md)
 - [Module 3 - Windows Fundamentals 2](Cyber_Security_101/M3-02-Windows_Fundamentals_2.md)
+- [Module 3 - Windows Fundamentals 3](Cyber_Security_101/M3-03-Windows_Fundamentals_3.md)
+- [Module 3 - Windows AD Basics](Cyber_Security_101/M3-04-Windows_AD_Basics.md)
