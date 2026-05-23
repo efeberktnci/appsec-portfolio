@@ -42,4 +42,4 @@
 - [Module 3 - Windows Fundamentals 1](Cyber_Security_101/M3-01-Windows_Fundamentals_1.md)
 - [Module 3 - Windows Fundamentals 2](Cyber_Security_101/M3-02-Windows_Fundamentals_2.md)
 - [Module 3 - Windows Fundamentals 3](Cyber_Security_101/M3-03-Windows_Fundamentals_3.md)
-- [Module 3 - Windows AD Basics](Cyber_Security_101/M3-04-Windows_AD_Basics.md)
+- [Module 3 - Windows AD Basics](Cyber_Security_101/M3-04-Windows_AD_Basics.md)`r`n- [Module 4 - Windows Command Line](Cyber_Security_101/M4-01-Windows_Command_Line.md)
