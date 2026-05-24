@@ -1,4 +1,4 @@
-﻿![Last update](https://img.shields.io/badge/Last%20update-2026--05--23-495057?style=for-the-badge)
+![Last update](https://img.shields.io/badge/Last%20update-2026--05--24-495057?style=for-the-badge)
 
 # Learning Paths
 
@@ -49,3 +49,4 @@
 
 - [Module 5 - Networking Concepts](Cyber_Security_101/M5-01-Networking_Concepts.md)
 
+`r`n- [Module 5 - Networking Essentials](Cyber_Security_101/M5-02-Networking_Essentials.md)`r`n
