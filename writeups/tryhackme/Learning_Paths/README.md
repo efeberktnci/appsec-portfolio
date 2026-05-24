@@ -1,6 +1,8 @@
-![Last update](https://img.shields.io/badge/Last%20update-2026--05--24-495057?style=for-the-badge)
+![Last update](https://img.shields.io/badge/Last%20update-2026--05--25-495057?style=for-the-badge)
 
 # Learning Paths
+
+## Pre Security
 
 - [Module 1 - Offensive Security Intro](Pre_Security/M1-01-Offensive_Security_Intro.md)
 - [Module 1 - Defensive Security Intro](Pre_Security/M1-02-Defensive_Security_Intro.md)
@@ -47,4 +49,4 @@
 - [Module 4 - Windows PowerShell](Cyber_Security_101/M4-02-Windows_PowerShell.md)
 - [Module 4 - Linux Shells](Cyber_Security_101/M4-03-Linux_Shells.md)
 - [Module 5 - Networking Concepts](Cyber_Security_101/M5-01-Networking_Concepts.md)
-- [Module 5 - Networking Essentials](Cyber_Security_101/M5-02-Networking_Essentials.md)
+- [Module 5 - Networking Core Protocols](Cyber_Security_101/M5-03-Networking_Core_Protocols.md)
