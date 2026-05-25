@@ -51,5 +51,7 @@
 - [Module 5 - Networking Concepts](Cyber_Security_101/M5-01-Networking_Concepts.md)
 - [Module 5 - Networking Essentials](Cyber_Security_101/M5-02-Networking_Essentials.md)
 - [Module 5 - Networking Core Protocols](Cyber_Security_101/M5-03-Networking_Core_Protocols.md)
+- [Module 5 - Wireshark: The Basics](Cyber_Security_101/M5-05-Wireshark_The_Basics.md)
 - [Module 5 - Networking Secure Protocols](Cyber_Security_101/M5-04-Networking_Secure_Protocols.md)
+
 
