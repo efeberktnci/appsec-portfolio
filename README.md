@@ -3,7 +3,7 @@
 ![Track: AppSec](https://img.shields.io/badge/Track-AppSec-0B7285?style=for-the-badge)
 ![Focus: PortSwigger](https://img.shields.io/badge/Focus-PortSwigger-1C7ED6?style=for-the-badge)
 ![Status: Active](https://img.shields.io/badge/Status-Active-2F9E44?style=for-the-badge)
-![Last update](https://img.shields.io/badge/Last%20update-2026--05--17-495057?style=for-the-badge)
+![Last update](https://img.shields.io/badge/Last%20update-2026--10--07-495057?style=for-the-badge)
 
 This repository is my AppSec / Product Security portfolio: lab write-ups, pentest-style findings, Secure SDLC artifacts
 (threat modeling, code review checklists), and CI/CD security demo outputs.
@@ -18,9 +18,10 @@ This section is intentionally short and scannable. Each platform has its own ind
 
 | Platform | Index | Featured |
 |---|---|---|
-| <img src="https://img.shields.io/static/v1?style=flat-square&message=%20&logo=portswigger&label=&color=FF6633&logoColor=white" height="18" alt="PortSwigger" /> **PortSwigger Web Security Academy** | [writeups/portswigger/](writeups/portswigger/) | [Server-side vulnerabilities (ordered)](writeups/portswigger/server-side-vulns/) · [CSRF](writeups/portswigger/csrf/) |
 | <img src="https://img.shields.io/static/v1?style=flat-square&message=%20&logo=tryhackme&label=&color=212C42&logoColor=white" height="18" alt="TryHackMe" /> **TryHackMe** | [writeups/tryhackme/](writeups/tryhackme/) | _In progress_ |
-| <img src="https://raw.githubusercontent.com/juice-shop/juice-shop/develop/frontend/src/assets/public/images/JuiceShop_Logo_100px.png" height="18" alt="OWASP Juice Shop logo" /> **OWASP Juice Shop** | _Coming soon_ | _Coming soon_ |
+| <img src="writeups/letsdefend/assets/LetsDefend_logo.jpg" height="18" alt="LetsDefend logo" /> **LetsDefend** | [writeups/letsdefend/](writeups/letsdefend/) | _In progress_ |
+| <img src="https://img.shields.io/static/v1?style=flat-square&message=%20&logo=portswigger&label=&color=FF6633&logoColor=white" height="18" alt="PortSwigger" /> **PortSwigger Web Security Academy** | [writeups/portswigger/](writeups/portswigger/) | [Server-side vulnerabilities (ordered)](writeups/portswigger/server-side-vulns/) · [CSRF](writeups/portswigger/csrf/) |
+| <img src="https://raw.githubusercontent.com/juice-shop/juice-shop/develop/frontend/src/assets/public/images/JuiceShop_Logo_100px.png" height="18" alt="OWASP Juice Shop logo" /> **OWASP Juice Shop** | _Planned_ | _Planned_ |
 
 ## Threat Models
 - Threat model index: [threat-models/](threat-models/)
@@ -45,13 +46,13 @@ Template: [templates/FINDING_TEMPLATE.md](templates/FINDING_TEMPLATE.md)
 1. Copy `templates/FINDING_TEMPLATE.md`
 2. Place it under the right folder:
    - PortSwigger / lab write-up: [writeups/](writeups/)
-   - Juice Shop / report-style finding: `reports/` (coming soon)
+   - Juice Shop / report-style finding: `reports/` (Planned)
 3. Remove sensitive values (no tokens/cookies/secrets/real target URLs)
 4. Use clean commit messages: `writeup: <lab name>` or `report: <short title>`
 
 ## Folder Structure
 - [writeups/](writeups/) PortSwigger + other lab write-ups
-- `reports/` Juice Shop reports and findings (coming soon)
+- `reports/` Juice Shop reports and findings (Planned)
 - [threat-models/](threat-models/) Threat model documents
 - [checklists/](checklists/) Code review checklists
 - [ci-cd-demo/](ci-cd-demo/) CI/CD security demo artifacts
