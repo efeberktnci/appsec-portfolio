@@ -6,11 +6,11 @@
 
 Welcome to my writeups for LetsDefend labs and investigations.
 These writeups are mainly a documentation for myself, but I hope others will benefit from them as well.
-This section is a work in progress. Work has started, and the first writeups will be added as I complete the labs.
+This section is a work in progress. Work has started, and the first course writeups are being added as I complete the SOC Analyst path.
 
 ## Content
 
-_In progress. The first sections and writeups will be added next._
+- [SOC Fundamentals](SOC_Fundamentals/)
 
 ## Support
 
