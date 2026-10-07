@@ -8,7 +8,15 @@
 
 Course link: https://app.letsdefend.io/path/soc-analyst-learning-path
 
-## 1) Course direction and SOC learning scope
+## 1) SOC Fundamentals course overview
+![SOC Fundamentals course overview](assets/01-course-overview.png)
+This screen shows the SOC Fundamentals course card, including the lesson count, questions, quiz, and estimated completion time.
+
+## 2) Lesson list and course order
+![SOC Fundamentals lesson list](assets/02-lesson-list.png)
+This screen shows the course order inside LetsDefend, starting from the introductory SOC topics and continuing toward SIEM, log management, EDR, SOAR, threat intelligence, common mistakes, and the final quiz.
+
+## 3) Course direction and SOC learning scope
 ![Introduction to SOC](assets/01-introduction-to-soc.png)
 This screenshot introduces the first SOC Fundamentals lesson and explains what the course will cover: SOC structure, SOC operations, SOC tools/products, how analysts should use those tools, and common SOC analyst mistakes.
 
