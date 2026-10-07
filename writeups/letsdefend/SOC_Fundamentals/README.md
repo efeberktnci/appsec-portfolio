@@ -12,3 +12,4 @@ Course link: https://app.letsdefend.io/path/soc-analyst-learning-path
 - [Introduction to SOC](01-Introduction_to_SOC/)
 - [SOC Types and Roles](02-SOC_Types_and_Roles/)
 - [SOC Analyst and Their Responsibilities](03-SOC_Analyst_and_Their_Responsibilities/)
+- [SIEM and Analyst Relationship](04-SIEM_and_Analyst_Relationship/)
