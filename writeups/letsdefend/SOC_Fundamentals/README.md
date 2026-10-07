@@ -8,13 +8,6 @@
 
 Course link: https://app.letsdefend.io/path/soc-analyst-learning-path
 
-## Course Overview
-![SOC Fundamentals course overview](assets/00-soc-fundamentals-course-overview.png)
-This course is part of the LetsDefend Security Analyst track. The overview shows the course scope clearly: 9 lessons, 11 lesson questions, 1 quiz, and an estimated 30 minutes to complete.
-
-![SOC Fundamentals lesson sidebar](assets/00-course-lesson-sidebar.png)
-The lesson list starts with the foundational SOC topics and then moves toward SIEM, log management, EDR, SOAR, threat intelligence, common analyst mistakes, and the final quiz. This order is useful because it explains the SOC role before going deeper into the tools used during investigations.
-
 ## Lessons
 - [Introduction to SOC](01-Introduction_to_SOC/)
 - [SOC Types and Roles](02-SOC_Types_and_Roles/)
