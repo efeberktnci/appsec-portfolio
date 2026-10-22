@@ -19,6 +19,7 @@ This section is intentionally short and scannable. Each platform has its own ind
 | Platform | Index | Featured |
 |---|---|---|
 | <img src="https://img.shields.io/static/v1?style=flat-square&message=%20&logo=tryhackme&label=&color=212C42&logoColor=white" height="18" alt="TryHackMe" /> **TryHackMe** | [writeups/tryhackme/](writeups/tryhackme/) | _In progress_ |
+| <img src="writeups/hackthebox/assets/hackthebox-logo.jpg" width="18" height="18" alt="Hack The Box logo" /> **Hack The Box** | [writeups/hackthebox/](writeups/hackthebox/) | [Intro to Academy](writeups/hackthebox/Intro_to_Academy/) |
 | <img src="writeups/letsdefend/assets/LetsDefend_icon.jpg" width="18" height="18" alt="LetsDefend logo" /> **LetsDefend** | [writeups/letsdefend/](writeups/letsdefend/) | _In progress_ |
 | <img src="https://img.shields.io/static/v1?style=flat-square&message=%20&logo=portswigger&label=&color=FF6633&logoColor=white" height="18" alt="PortSwigger" /> **PortSwigger Web Security Academy** | [writeups/portswigger/](writeups/portswigger/) | [Server-side vulnerabilities (ordered)](writeups/portswigger/server-side-vulns/) · [CSRF](writeups/portswigger/csrf/) |
 | <img src="https://raw.githubusercontent.com/juice-shop/juice-shop/develop/frontend/src/assets/public/images/JuiceShop_Logo_100px.png" height="18" alt="OWASP Juice Shop logo" /> **OWASP Juice Shop** | _Planned_ | _Planned_ |
@@ -60,4 +61,3 @@ Template: [templates/FINDING_TEMPLATE.md](templates/FINDING_TEMPLATE.md)
 
 ## Legal / Ethics
 This repository is for labs and authorized targets only. No testing of real systems without explicit permission.
-
