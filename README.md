@@ -1,17 +1,16 @@
-# AppSec Portfolio
+# Cybersecurity Learning Portfolio
 
 ![Track: AppSec](https://img.shields.io/badge/Track-AppSec-0B7285?style=for-the-badge)
-![Focus: PortSwigger](https://img.shields.io/badge/Focus-PortSwigger-1C7ED6?style=for-the-badge)
+![Focus: Security Labs](https://img.shields.io/badge/Focus-Security%20Labs-1C7ED6?style=for-the-badge)
 ![Status: Active](https://img.shields.io/badge/Status-Active-2F9E44?style=for-the-badge)
 ![Last update](https://img.shields.io/badge/Last%20update-2026--10--23-495057?style=for-the-badge)
 
-This repository is my AppSec / Product Security portfolio: lab write-ups, pentest-style findings, Secure SDLC artifacts
-(threat modeling, code review checklists), and CI/CD security demo outputs.
+This repository documents my hands-on cybersecurity learning: guided lab write-ups, pentest-style findings, SOC training notes, and Secure SDLC artifacts.
 
 ## What you'll find here
-- Reproducible findings with clear steps to reproduce
-- Practical fixes and tests (not just "there is a vuln", but "how to fix it")
-
+- Structured write-ups from TryHackMe, Hack The Box, LetsDefend, and PortSwigger Academy
+- Practical notes on networking, Linux, Nmap, SOC operations, and web security
+- Reproducible findings with clear steps to reproduce, fixes, and validation notes
 ## By Platform (pick a lab environment)
 
 This section is intentionally short and scannable. Each platform has its own index README for details.
@@ -30,26 +29,15 @@ This section is intentionally short and scannable. Each platform has its own ind
 ## CI/CD Security Demos
 - Companion repo: https://github.com/efeberktnci/appsec-tools-demo
 
-## Standard Finding Format
-Each finding follows the same structure:
-- Scope / Target
-- Steps to reproduce
-- Evidence (request/response, screenshots, logs)
-- Impact
-- Severity (Low/Medium/High/Critical + rationale)
-- Recommendation (fix + tests + defense-in-depth)
-- Retest plan
-- Executive summary (5-10 lines)
-
-Template: [templates/FINDING_TEMPLATE.md](templates/FINDING_TEMPLATE.md)
-
-## Quick Start (Add a new finding)
-1. Copy `templates/FINDING_TEMPLATE.md`
-2. Place it under the right folder:
-   - PortSwigger / lab write-up: [writeups/](writeups/)
-   - Juice Shop / report-style finding: `reports/` (Planned)
-3. Remove sensitive values (no tokens/cookies/secrets/real target URLs)
-4. Use clean commit messages: `writeup: <lab name>` or `report: <short title>`
+## Quick Start (Add a new write-up)
+1. Open the relevant platform index under [writeups/](writeups/).
+2. Add the completed lab or module in its platform folder:
+   - [TryHackMe](writeups/tryhackme/)
+   - [Hack The Box](writeups/hackthebox/)
+   - [LetsDefend](writeups/letsdefend/)
+   - [PortSwigger](writeups/portswigger/)
+3. Remove sensitive values such as tokens, credentials, personal IP addresses, and private target URLs.
+4. Use a clear commit message, for example: `writeup: add <lab name>`.
 
 ## Folder Structure
 - [writeups/](writeups/) PortSwigger + other lab write-ups
