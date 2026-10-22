@@ -1,4 +1,4 @@
-![Hack The Box logo](../assets/hackthebox-logo.jpg)
+<img src="../assets/hackthebox-logo.jpg" width="200" height="200" alt="Hack The Box logo" />
 
 # Intro to Academy
 
