@@ -11,6 +11,7 @@
 Room link: https://tryhackme.com/room/intermediatenmap
 
 ## Challenge completion
+![Intermediate Nmap completed](assets/M5-08-01.png)
 
 This CTF-style challenge combined Nmap enumeration, a direct connection with netcat, SSH authentication, and basic Linux navigation. The room's clue pointed to a high-numbered port that could reveal information useful for a remote-access service. The flag submission was accepted and the room reached 100% completion. The steps below describe the investigation leading up to that result.
 
