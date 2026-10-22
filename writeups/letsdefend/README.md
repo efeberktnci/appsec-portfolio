@@ -1,4 +1,4 @@
-<img src="assets/letsdefend-logo.png" width="200" height="200" alt="LetsDefend logo" />
+<img src="assets/letsdefend-logo.png" width="800" height="800" alt="LetsDefend logo" />
 
 # Writeups for LetsDefend
 

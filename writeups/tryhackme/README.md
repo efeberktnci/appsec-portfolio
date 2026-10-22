@@ -1,4 +1,4 @@
-<img src="assets/TryHackMe_logo.png" width="200" height="200" alt="TryHackMe logo" />
+<img src="assets/TryHackMe_logo.png" width="800" height="800" alt="TryHackMe logo" />
 
 # Writeups for TryHackMe
 
