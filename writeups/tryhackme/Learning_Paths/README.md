@@ -55,6 +55,7 @@
 - [Module 5 - Wireshark: The Basics](Cyber_Security_101/M5-05-Wireshark_The_Basics.md)
 - [Module 5 - TCPDump](Cyber_Security_101/M5-06-tcpdump.md)
 - [Module 5 - Nmap: The Basics](Cyber_Security_101/M5-07-Nmap_The_Basics.md)
+- [Module 5 - Intermediate Nmap](Cyber_Security_101/M5-08-Intermediate_Nmap.md)
 
 
 
