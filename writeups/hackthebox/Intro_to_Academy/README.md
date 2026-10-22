@@ -1,4 +1,4 @@
-<img src="../assets/hackthebox-logo.jpg" width="200" height="200" alt="Hack The Box logo" />
+<img src="../assets/hackthebox-logo.png" width="200" height="200" alt="Hack The Box logo" />
 
 # Intro to Academy
 

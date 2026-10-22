@@ -1,4 +1,4 @@
-![LetsDefend Logo](assets/LetsDefend_icon.jpg)
+<img src="assets/letsdefend-logo.png" width="200" height="200" alt="LetsDefend logo" />
 
 # Writeups for LetsDefend
 

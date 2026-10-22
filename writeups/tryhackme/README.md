@@ -1,4 +1,4 @@
-﻿![TryHackMe Logo](assets/TryHackMe_logo.png)
+<img src="assets/TryHackMe_logo.png" width="200" height="200" alt="TryHackMe logo" />
 
 # Writeups for TryHackMe
 
