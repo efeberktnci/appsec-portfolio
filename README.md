@@ -3,7 +3,7 @@
 ![Track: AppSec](https://img.shields.io/badge/Track-AppSec-0B7285?style=for-the-badge)
 ![Focus: PortSwigger](https://img.shields.io/badge/Focus-PortSwigger-1C7ED6?style=for-the-badge)
 ![Status: Active](https://img.shields.io/badge/Status-Active-2F9E44?style=for-the-badge)
-![Last update](https://img.shields.io/badge/Last%20update-2026--10--07-495057?style=for-the-badge)
+![Last update](https://img.shields.io/badge/Last%20update-2026--10--23-495057?style=for-the-badge)
 
 This repository is my AppSec / Product Security portfolio: lab write-ups, pentest-style findings, Secure SDLC artifacts
 (threat modeling, code review checklists), and CI/CD security demo outputs.
@@ -18,9 +18,9 @@ This section is intentionally short and scannable. Each platform has its own ind
 
 | Platform | Index | Featured |
 |---|---|---|
-| <img src="https://img.shields.io/static/v1?style=flat-square&message=%20&logo=tryhackme&label=&color=212C42&logoColor=white" height="18" alt="TryHackMe" /> **TryHackMe** | [writeups/tryhackme/](writeups/tryhackme/) | _In progress_ |
-| <img src="writeups/hackthebox/assets/hackthebox-logo.jpg" width="18" height="18" alt="Hack The Box logo" /> **Hack The Box** | [writeups/hackthebox/](writeups/hackthebox/) | [Intro to Academy](writeups/hackthebox/Intro_to_Academy/) |
-| <img src="writeups/letsdefend/assets/LetsDefend_icon.jpg" width="18" height="18" alt="LetsDefend logo" /> **LetsDefend** | [writeups/letsdefend/](writeups/letsdefend/) | _In progress_ |
+| <img src="https://img.shields.io/static/v1?style=flat-square&message=%20&logo=tryhackme&label=&color=212C42&logoColor=white" height="18" alt="TryHackMe" /> **TryHackMe** | [writeups/tryhackme/](writeups/tryhackme/) | [Nmap: The Basics](writeups/tryhackme/Learning_Paths/Cyber_Security_101/M5-07-Nmap_The_Basics.md) · [Intermediate Nmap](writeups/tryhackme/Learning_Paths/Cyber_Security_101/M5-08-Intermediate_Nmap.md) · [tcpdump](writeups/tryhackme/Learning_Paths/Cyber_Security_101/M5-06-tcpdump.md) |
+| <img src="writeups/hackthebox/assets/hackthebox-logo.png" width="18" height="18" alt="Hack The Box logo" /> **Hack The Box** | [writeups/hackthebox/](writeups/hackthebox/) | [Intro to Academy](writeups/hackthebox/Intro_to_Academy/) |
+| <img src="writeups/letsdefend/assets/letsdefend-logo.png" width="18" height="18" alt="LetsDefend logo" /> **LetsDefend** | [writeups/letsdefend/](writeups/letsdefend/) | [SOC Fundamentals](writeups/letsdefend/SOC_Fundamentals/) · [SIEM and Analyst Relationship](writeups/letsdefend/SOC_Fundamentals/04-SIEM_and_Analyst_Relationship/) · [SOC Types and Roles](writeups/letsdefend/SOC_Fundamentals/02-SOC_Types_and_Roles/) |
 | <img src="https://img.shields.io/static/v1?style=flat-square&message=%20&logo=portswigger&label=&color=FF6633&logoColor=white" height="18" alt="PortSwigger" /> **PortSwigger Web Security Academy** | [writeups/portswigger/](writeups/portswigger/) | [Server-side vulnerabilities (ordered)](writeups/portswigger/server-side-vulns/) · [CSRF](writeups/portswigger/csrf/) |
 | <img src="https://raw.githubusercontent.com/juice-shop/juice-shop/develop/frontend/src/assets/public/images/JuiceShop_Logo_100px.png" height="18" alt="OWASP Juice Shop logo" /> **OWASP Juice Shop** | _Planned_ | _Planned_ |
 
