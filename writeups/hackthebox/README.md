@@ -9,6 +9,8 @@ Writeups and learning notes for Hack The Box Academy modules and authorized Hack
 ## Content
 
 - [Intro to Academy](Intro_to_Academy/)
+- [Labs](Labs/)
+  - [Meow](Labs/Meow/)
 
 ## Scope
 
