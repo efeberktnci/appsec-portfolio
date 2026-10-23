@@ -10,6 +10,7 @@ Writeups and learning notes for Hack The Box Academy modules and authorized Hack
 
 - [Intro to Academy](Intro_to_Academy/)
 - [Labs](Labs/)
+  - [Redeemer](Labs/Redeemer/)
   - [Dancing](Labs/Dancing/)
   - [Fawn](Labs/Fawn/)
   - [Meow](Labs/Meow/)
