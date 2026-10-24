@@ -7,26 +7,30 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 LABS = ROOT / "writeups/hackthebox/Labs"
+STARTING_POINT = LABS / "Starting_Point"
 README = ROOT / "README.md"
 
 
 def added_order():
-    """Return creation order from Git, newest first, independent of later edits."""
+    """Return creation order from Git, preserving it across folder moves."""
     output = subprocess.run(
-        ["git", "log", "--diff-filter=A", "--format=COMMIT:%H", "--name-only", "--", "writeups"],
+        ["git", "log", "--reverse", "--diff-filter=AR", "-M", "--format=", "--name-status", "--", "writeups"],
         cwd=ROOT, capture_output=True, text=True, check=True,
     ).stdout
     order = {}
     for line in output.splitlines():
-        if line.startswith("writeups/") and line not in order:
-            order[line] = len(order)
+        fields = line.split("\t")
+        if len(fields) == 2 and fields[0] == "A" and fields[1].startswith("writeups/"):
+            order[fields[1]] = len(order)
+        elif len(fields) == 3 and fields[0].startswith("R") and fields[1] in order:
+            order[fields[2]] = order.pop(fields[1])
     return order
 
 
 def candidates(platform):
     base = ROOT / "writeups" / platform
     if platform == "hackthebox":
-        return list((base / "Labs").glob("*/README.md"))
+        return list(STARTING_POINT.glob("*/README.md"))
     if platform == "letsdefend":
         return [p for p in base.rglob("README.md") if p.parent.name != "SOC_Fundamentals" and p.parent != base]
     return [
@@ -36,7 +40,7 @@ def candidates(platform):
 
 
 def title(path):
-    if path.parent.parent == LABS:
+    if path.parent.parent == STARTING_POINT:
         return path.parent.name
     match = re.search(r"^#\s+(.+)$", path.read_text(encoding="utf-8", errors="replace"), re.M)
     value = match.group(1).strip() if match else path.stem.replace("_", " ")
@@ -81,7 +85,7 @@ def main():
         ("portswigger", "PortSwigger Web Security Academy"),
     ):
         paths = [p for p in candidates(directory) if p.relative_to(ROOT).as_posix() in order]
-        paths.sort(key=lambda p: order[p.relative_to(ROOT).as_posix()])
+        paths.sort(key=lambda p: -order[p.relative_to(ROOT).as_posix()])
         latest[name] = paths
 
     content = README.read_text(encoding="utf-8")
@@ -92,9 +96,11 @@ def main():
     labs = latest["Hack The Box"]
     index = ROOT / "writeups/hackthebox/README.md"
     content = index.read_text(encoding="utf-8")
-    replacement = "".join(f"  - [{p.parent.name}](Labs/{p.parent.name}/)\n" for p in labs)
+    replacement = "  - [Starting Point](Labs/Starting_Point/)\n" + "".join(
+        f"    - [{p.parent.name}](Labs/Starting_Point/{p.parent.name}/)\n" for p in labs
+    )
     content, count = re.subn(
-        r"(?<=- \[Labs\]\(Labs/\)\n)(?:  - \[[^\n]+\n)*",
+        r"(?<=- \[Labs\]\(Labs/\)\n)(?:  - \[[^\n]+\n|    - \[[^\n]+\n)*",
         lambda _: replacement, content, count=1,
     )
     if count != 1:
@@ -103,13 +109,24 @@ def main():
 
     index = LABS / "README.md"
     content = index.read_text(encoding="utf-8")
-    replacement = "".join(f"- [{p.parent.name}]({p.parent.name}/)\n" for p in labs)
+    replacement = "- [Starting Point](Starting_Point/)\n"
     content, count = re.subn(
         r"(?<=# Hack The Box Labs\n\n)(?:- \[[^\n]+\n)*",
         lambda _: replacement, content, count=1,
     )
     if count != 1:
         raise RuntimeError("Could not find HTB Labs README")
+    write_if_changed(index, content)
+
+    index = STARTING_POINT / "README.md"
+    content = index.read_text(encoding="utf-8")
+    replacement = "".join(f"- [{p.parent.name}]({p.parent.name}/)\n" for p in labs)
+    content, count = re.subn(
+        r"(?<=# Hack The Box Starting Point\n\n)(?:- \[[^\n]+\n)*",
+        lambda _: replacement, content, count=1,
+    )
+    if count != 1:
+        raise RuntimeError("Could not find HTB Starting Point README")
     write_if_changed(index, content)
 
 
