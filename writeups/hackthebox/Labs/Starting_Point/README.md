@@ -1,5 +1,6 @@
 # Hack The Box Starting Point
 
+- [Synced](Synced/)
 - [Mongod](Mongod/)
 - [Preignition](Preignition/)
 - [Explosion](Explosion/)
