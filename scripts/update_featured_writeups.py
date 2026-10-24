@@ -1,0 +1,117 @@
+"""Show the three most recently added write-ups for each platform."""
+
+from pathlib import Path
+import re
+import subprocess
+
+
+ROOT = Path(__file__).resolve().parents[1]
+LABS = ROOT / "writeups/hackthebox/Labs"
+README = ROOT / "README.md"
+
+
+def added_order():
+    """Return creation order from Git, newest first, independent of later edits."""
+    output = subprocess.run(
+        ["git", "log", "--diff-filter=A", "--format=COMMIT:%H", "--name-only", "--", "writeups"],
+        cwd=ROOT, capture_output=True, text=True, check=True,
+    ).stdout
+    order = {}
+    for line in output.splitlines():
+        if line.startswith("writeups/") and line not in order:
+            order[line] = len(order)
+    return order
+
+
+def candidates(platform):
+    base = ROOT / "writeups" / platform
+    if platform == "hackthebox":
+        return list((base / "Labs").glob("*/README.md"))
+    if platform == "letsdefend":
+        return [p for p in base.rglob("README.md") if p.parent.name != "SOC_Fundamentals" and p.parent != base]
+    return [
+        p for p in base.rglob("*.md")
+        if p.name != "README.md" and not p.name.startswith("00-notes")
+    ]
+
+
+def title(path):
+    if path.parent.parent == LABS:
+        return path.parent.name
+    match = re.search(r"^#\s+(.+)$", path.read_text(encoding="utf-8", errors="replace"), re.M)
+    value = match.group(1).strip() if match else path.stem.replace("_", " ")
+    return re.sub(r"^Lab:\s*", "", value)
+
+
+def markdown_link(path, prefix=""):
+    relative = path.relative_to(ROOT).as_posix()
+    if path.name == "README.md":
+        relative = relative.removesuffix("README.md")
+    label = title(path).replace("|", "\\|").replace("]", "\\]")
+    return f"[{label}]({prefix}{relative})"
+
+
+def replace_platform_row(content, platform, links):
+    lines = content.splitlines(keepends=True)
+    matches = [i for i, line in enumerate(lines) if f"**{platform}**" in line and line.startswith("| ")]
+    if len(matches) != 1:
+        raise RuntimeError(f"Expected one {platform} table row")
+    index = matches[0]
+    cells = lines[index].rstrip("\r\n").split(" | ")
+    if len(cells) != 3 or not cells[2].endswith(" |"):
+        raise RuntimeError(f"Unexpected table format for {platform}")
+    cells[2] = " · ".join(links) + " |"
+    lines[index] = " | ".join(cells) + "\n"
+    return "".join(lines)
+
+
+def write_if_changed(path, content):
+    if path.read_text(encoding="utf-8") != content:
+        path.write_text(content, encoding="utf-8", newline="\n")
+        print(f"Updated {path.relative_to(ROOT)}")
+
+
+def main():
+    order = added_order()
+    latest = {}
+    for directory, name in (
+        ("tryhackme", "TryHackMe"),
+        ("hackthebox", "Hack The Box"),
+        ("letsdefend", "LetsDefend"),
+        ("portswigger", "PortSwigger Web Security Academy"),
+    ):
+        paths = [p for p in candidates(directory) if p.relative_to(ROOT).as_posix() in order]
+        paths.sort(key=lambda p: order[p.relative_to(ROOT).as_posix()])
+        latest[name] = paths
+
+    content = README.read_text(encoding="utf-8")
+    for name, paths in latest.items():
+        content = replace_platform_row(content, name, [markdown_link(p) for p in paths[:3]])
+    write_if_changed(README, content)
+
+    labs = latest["Hack The Box"]
+    index = ROOT / "writeups/hackthebox/README.md"
+    content = index.read_text(encoding="utf-8")
+    replacement = "".join(f"  - [{p.parent.name}](Labs/{p.parent.name}/)\n" for p in labs)
+    content, count = re.subn(
+        r"(?<=- \[Labs\]\(Labs/\)\n)(?:  - \[[^\n]+\n)*",
+        lambda _: replacement, content, count=1,
+    )
+    if count != 1:
+        raise RuntimeError("Could not find HTB Labs index")
+    write_if_changed(index, content)
+
+    index = LABS / "README.md"
+    content = index.read_text(encoding="utf-8")
+    replacement = "".join(f"- [{p.parent.name}]({p.parent.name}/)\n" for p in labs)
+    content, count = re.subn(
+        r"(?<=# Hack The Box Labs\n\n)(?:- \[[^\n]+\n)*",
+        lambda _: replacement, content, count=1,
+    )
+    if count != 1:
+        raise RuntimeError("Could not find HTB Labs README")
+    write_if_changed(index, content)
+
+
+if __name__ == "__main__":
+    main()
