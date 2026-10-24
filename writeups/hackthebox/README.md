@@ -10,12 +10,13 @@ Writeups and learning notes for Hack The Box Academy modules and authorized Hack
 
 - [Intro to Academy](Intro_to_Academy/)
 - [Labs](Labs/)
-  - [Preignition](Labs/Preignition/)
-  - [Explosion](Labs/Explosion/)
-  - [Redeemer](Labs/Redeemer/)
-  - [Dancing](Labs/Dancing/)
-  - [Fawn](Labs/Fawn/)
-  - [Meow](Labs/Meow/)
+  - [Starting Point](Labs/Starting_Point/)
+    - [Preignition](Labs/Starting_Point/Preignition/)
+    - [Explosion](Labs/Starting_Point/Explosion/)
+    - [Redeemer](Labs/Starting_Point/Redeemer/)
+    - [Dancing](Labs/Starting_Point/Dancing/)
+    - [Fawn](Labs/Starting_Point/Fawn/)
+    - [Meow](Labs/Starting_Point/Meow/)
 
 ## Scope
 
